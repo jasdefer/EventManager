@@ -8,8 +8,8 @@ namespace DataLayer.Repository.MemoryRepository
 {
     public abstract class MemoryRepository<T, U> : IRepository<T, U> where T : IEntity<U> where U : IComparable
     {
-        protected U Id = default(U);
-        protected List<T> Entities = new List<T>();
+        protected static U Id = default(U);
+        protected static List<T> Entities = new List<T>();
 
         public T Add(T entity)
         {

@@ -23,7 +23,7 @@ namespace DataLayer.Repository.MemoryRepository
 
         protected override int GetNextId()
         {
-            return Id++;
+            return ++Id;
         }
     }
 }

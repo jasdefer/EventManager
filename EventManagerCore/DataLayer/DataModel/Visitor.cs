@@ -10,15 +10,12 @@ namespace DataLayer.DataModel
 {
     public class Visitor : IEntity<int>
     {
-        public Visitor(int id, string username, string email, string passwordHash)
+        public Visitor(string username, string email)
         {
-            Id = id;
             Username = username;
             Email = email;
-            PasswordHash = passwordHash;
 
             VisitorValidation.Username.IsValid(Username);
-            VisitorValidation.PasswordHash.IsValid(PasswordHash);
             VisitorValidation.Email.IsValid(Email);
         }
 

@@ -10,9 +10,8 @@ namespace DataLayer.DataModel
 {
     public class Region : IEntity<int>
     {
-        public Region(int id, string name, DateTime timeStamp, string polygon)
+        public Region(string name, DateTime timeStamp, string polygon)
         {
-            Id = id;
             Name = name;
             TimeStamp = timeStamp;
             Polygon = polygon;
