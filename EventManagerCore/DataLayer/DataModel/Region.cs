@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using ValidationRules.PropertyValidation;
 
 namespace DataLayer.DataModel
 {
-    public class Region
+    public class Region : IEntity<int>
     {
         public Region(int id, string name, DateTime timeStamp, string polygon)
         {

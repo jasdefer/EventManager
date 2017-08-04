@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using ValidationRules.PropertyValidation;
 
 namespace DataLayer.DataModel
 {
-    public class Visitor
+    public class Visitor : IEntity<int>
     {
         public Visitor(int id, string username, string email, string passwordHash)
         {
