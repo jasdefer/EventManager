@@ -12,6 +12,7 @@ namespace DataLayerTests.RepositoryTests
     public abstract class RepositoryTestFixture<T,U> where T:IEntity<U> where U:IComparable
     {
         private IRepository<T, U> Repository;
+        private string TestConnectionString = @"Data Source =(localdb)\MSSQLLocalDB; Initial Catalog = master; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = True; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
 
         [TestInitialize]
         public void Setup()

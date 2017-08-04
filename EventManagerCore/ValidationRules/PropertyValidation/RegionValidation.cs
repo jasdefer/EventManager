@@ -12,6 +12,6 @@ namespace ValidationRules.PropertyValidation
         public static readonly StringPropertyValidator Name = new StringPropertyValidator(nameof(Description), 3, 10, true);
         public static readonly StringPropertyValidator Polygon = new StringPropertyValidator(nameof(Description), 1, 1024, true);
         public static readonly PropertyValidator<DateTime> TimeStamp = new PropertyValidator<DateTime>(nameof(TimeStamp), new DateTime(2000, 01, 01), new DateTime(2099, 12, 31), true);
-        public static readonly PropertyValidator<int> Value = new PropertyValidator<int>(nameof(Value), 0, 10, true);
+        public static readonly PropertyValidator<int> Value = new PropertyValidator<int>(nameof(Value), 0, 10, false);
     }
 }

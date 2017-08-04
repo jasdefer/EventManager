@@ -11,9 +11,9 @@ namespace DataLayerTests.RepositoryTests
 {
     public abstract class RegionRepositoryTestFixture : RepositoryTestFixture<Region,int>
     {
-        protected override IRepository<Region, int> GetRepository()
+        protected override Region CreateEntity()
         {
-            return new RegionMemoryRepository();
+            return new Region("testregion", new DateTime(2010, 01, 01), "testpolygon");
         }
 
         protected override Region UpdateEntity(Region entity)

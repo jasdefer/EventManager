@@ -20,7 +20,6 @@ namespace DataLayer.Repository.DatabaseRepository
 
         public T Add(T entity)
         {
-            
             throw new NotImplementedException();
         }
 

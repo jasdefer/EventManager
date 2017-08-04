@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CreateDatabase" xml:space="preserve">
+    <value>USE [master]
+GO
+/****** Object:  Table [dbo].[Regions]    Script Date: 04-Aug-17 6:26:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Regions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Value] [int] NULL,
+	[Name] [nchar](11) NOT NULL,
+	[TimeStamp] [datetime] NOT NULL,
+	[Description] [nchar](1024) NULL,
+	[Polygon] [varchar](1024) NOT NULL,
+ CONSTRAINT [PK_Regions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[RegionVisitors]    Script Date: 04-Aug-17 6:26:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RegionVisitors](
+	[VisitorId] [int] NOT NULL,
+	[RegionId] [int] NOT NULL,
+ CONSTRAINT [PK_RegionVisitors] PRIMARY KEY CLUSTERED 
+(
+	[VisitorId] ASC,
+	[RegionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Visitors]    Script Date: 04-Aug-17 6:26:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Visitors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nchar](64) NOT NULL,
+	[Email] [nchar](512) NOT NULL,
+	[PasswordHash] [varchar](2048) NOT NULL,
+	[Bio] [varchar](1024) NULL,
+ CONSTRAINT [PK_Visitors] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[RegionVisitors]  WITH CHECK ADD  CONSTRAINT [FK_RegionId] FOREIGN KEY([RegionId])
+REFERENCES [dbo].[Regions] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[RegionVisitors] CHECK CONSTRAINT [FK_RegionId]
+GO
+ALTER TABLE [dbo].[RegionVisitors]  WITH CHECK ADD  CONSTRAINT [FK_VisitorId] FOREIGN KEY([VisitorId])
+REFERENCES [dbo].[Visitors] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[RegionVisitors] CHECK CONSTRAINT [FK_VisitorId]
+GO";
+
+        private const string CreateDatabaseQuery = @"USE [master]
+GO
+
+/****** Object:  Database [EventTestDb]    Script Date: 04-Aug-17 6:49:32 PM ******/
+CREATE DATABASE [EventTestDb]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'EventTestDb', FILENAME = N'C:\Users\Justus\Desktop\EventTestDb.mdf' , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'EventTestDb_log', FILENAME = N'C:\Users\Justus\Desktop\EventTestDb_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+
+ALTER DATABASE [EventTestDb] SET COMPATIBILITY_LEVEL = 120
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [EventTestDb].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [EventTestDb] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [EventTestDb] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [EventTestDb] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [EventTestDb] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [EventTestDb] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [EventTestDb] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [EventTestDb] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [EventTestDb] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [EventTestDb] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [EventTestDb] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+
+ALTER DATABASE [EventTestDb] SET DELAYED_DURABILITY = DISABLED 
+GO
+
+ALTER DATABASE [EventTestDb] SET  READ_WRITE 
+GO</value>
+  </data>
+  <data name="CreateTables" xml:space="preserve">
+    <value>USE [EventTestDb]
+GO
+/****** Object:  Table [dbo].[Regions]    Script Date: 04-Aug-17 6:26:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Regions](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Value] [int] NULL,
+	[Name] [nchar](11) NOT NULL,
+	[TimeStamp] [datetime] NOT NULL,
+	[Description] [nchar](1024) NULL,
+	[Polygon] [varchar](1024) NOT NULL,
+ CONSTRAINT [PK_Regions] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[RegionVisitors]    Script Date: 04-Aug-17 6:26:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RegionVisitors](
+	[VisitorId] [int] NOT NULL,
+	[RegionId] [int] NOT NULL,
+ CONSTRAINT [PK_RegionVisitors] PRIMARY KEY CLUSTERED 
+(
+	[VisitorId] ASC,
+	[RegionId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Visitors]    Script Date: 04-Aug-17 6:26:08 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Visitors](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nchar](64) NOT NULL,
+	[Email] [nchar](512) NOT NULL,
+	[PasswordHash] [varchar](2048) NOT NULL,
+	[Bio] [varchar](1024) NULL,
+ CONSTRAINT [PK_Visitors] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[RegionVisitors]  WITH CHECK ADD  CONSTRAINT [FK_RegionId] FOREIGN KEY([RegionId])
+REFERENCES [dbo].[Regions] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[RegionVisitors] CHECK CONSTRAINT [FK_RegionId]
+GO
+ALTER TABLE [dbo].[RegionVisitors]  WITH CHECK ADD  CONSTRAINT [FK_VisitorId] FOREIGN KEY([VisitorId])
+REFERENCES [dbo].[Visitors] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[RegionVisitors] CHECK CONSTRAINT [FK_VisitorId]
+GO</value>
+    <comment>Creates the tables for the database</comment>
+  </data>
+  <data name="SeedTestDatabase" xml:space="preserve">
+    <value>USE [EventTestDb]
+GO
+SET IDENTITY_INSERT [dbo].[Visitors] ON 
+
+INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (2, N'jochen', N'jochen@email.com', N'SECURE HASH', N'I am an awesome guy.')
+INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (3, N'hans', N'hans@email.com', N'SECURE HASH', N'I am an even better guy.')
+INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (4, N'peter', N'peter@email.com', N'SECURE HASH', NULL)
+SET IDENTITY_INSERT [dbo].[Visitors] OFF
+SET IDENTITY_INSERT [dbo].[Regions] ON 
+
+INSERT [dbo].[Regions] ([Id], [Value], [Name], [TimeStamp], [Description], [Polygon]) VALUES (2, 1, N'Region One ', CAST(N'2010-01-20T10:23:55.000' AS DateTime), N'A brief description of this region.', N'polygon data')
+INSERT [dbo].[Regions] ([Id], [Value], [Name], [TimeStamp], [Description], [Polygon]) VALUES (3, 10, N'Region Two ', CAST(N'2010-01-01T00:00:00.000' AS DateTime), NULL, N'polygon data')
+INSERT [dbo].[Regions] ([Id], [Value], [Name], [TimeStamp], [Description], [Polygon]) VALUES (7, 5, N'RegionThree', CAST(N'2017-12-12T10:10:00.000' AS DateTime), N'This is another description for this awesome region.', N'polygon data')
+SET IDENTITY_INSERT [dbo].[Regions] OFF
+INSERT [dbo].[RegionVisitors] ([VisitorId], [RegionId]) VALUES (2, 2)
+INSERT [dbo].[RegionVisitors] ([VisitorId], [RegionId]) VALUES (2, 3)
+INSERT [dbo].[RegionVisitors] ([VisitorId], [RegionId]) VALUES (4, 3)</value>
+  </data>
+</root>
