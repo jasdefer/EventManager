@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValidationRules.VisitorValidation.ValidationExceptions;
+using ValidationRules.ValidationExceptions;
 
 namespace ValidationRules
 {
@@ -29,12 +29,12 @@ namespace ValidationRules
 
             if (property.Length < MinLength)
             {
-                return throwException ? throw new PropertyTooShortException(PropertyName, property.Length, (int)MinLength) : false;
+                return throwException ? throw new PropertyTooSmallException<int>(PropertyName, property.Length, (int)MinLength) : false;
             }
 
             if (property.Length > MaxLength)
             {
-                return throwException ? throw new PropertyTooShortException(PropertyName, property.Length, (int)MaxLength) : false;
+                return throwException ? throw new PropertyTooSmallException<int>(PropertyName, property.Length, (int)MaxLength) : false;
             }
 
             return true;
