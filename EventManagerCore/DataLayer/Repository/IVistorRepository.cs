@@ -9,6 +9,6 @@ namespace DataLayer.Repository
 {
     public interface IVistorRepository : IRepository<Visitor,int>
     {
-        IEnumerable<Visitor> GetAllOfRegion(Region region);
+        IEnumerable<Region> GetAllVisiting(int userId);
     }
 }

@@ -8,6 +8,6 @@ namespace DataLayer.Repository
 {
     public interface IEntity<U> where U: IComparable
     {
-        
+        U Id { get; set; }
     }
 }
