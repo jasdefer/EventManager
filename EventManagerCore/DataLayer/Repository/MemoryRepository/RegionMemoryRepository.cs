@@ -43,6 +43,14 @@ namespace DataLayer.Repository.MemoryRepository
             return region.Visitors;
         }
 
+        public void RemoveAllVisitors(int regionId)
+        {
+            Region region = Get(regionId);
+            if (region == null) throw new KeyNotFoundException($"No region with the id {regionId} found.");
+
+            region.Visitors = new List<Visitor>();
+        }
+
         public void RemoveVisitor(int regionId, int visitorId)
         {
             Region region = Get(regionId);

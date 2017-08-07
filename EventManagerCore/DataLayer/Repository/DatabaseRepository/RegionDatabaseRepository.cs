@@ -64,6 +64,15 @@ namespace DataLayer.Repository.DatabaseRepository
             return visitorIds;
         }
 
+        public void RemoveAllVisitors(int regionId)
+        {
+            int affectedRows = 0;
+            using (var sql = new SqlConnection(ConnectionString))
+            {
+                affectedRows = sql.Execute($"DELETE FROM {DatabaseContext.RegionVisitorsTableName} Where RegionId={regionId};");
+            }
+        }
+
         public void RemoveVisitor(int regionId, int visitorId)
         {
             int affectedRows = 0;

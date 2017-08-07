@@ -17,5 +17,15 @@ namespace DataLayer.DataModel
         public string Bio { get; set; }
 
         public IEnumerable<Region> Regions { get; set; }
+
+        public bool IsValid(bool throwException = true)
+        {
+            if (!VisitorValidation.Username.IsValid(Username, throwException)) return false;
+            if (!VisitorValidation.Email.IsValid(Email, throwException)) return false;
+            if (!VisitorValidation.PasswordHash.IsValid(PasswordHash, throwException)) return false;
+            if (!VisitorValidation.Bio.IsValid(Bio, throwException)) return false;
+
+            return true;
+        }
     }
 }

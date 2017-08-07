@@ -9,11 +9,11 @@ namespace DataLayer.Repository.MemoryRepository
 {
     public class VisitorMemoryRepository : MemoryRepository<Visitor, int>, IVistorRepository
     {
-        public IEnumerable<Region> GetAllVisiting(int userId)
+        public IEnumerable<int> GetAllVisiting(int userId)
         {
             Visitor visitor = Get(userId);
             if (visitor == null) throw new KeyNotFoundException($"No user with the id {userId} found.");
-            return visitor.Regions;
+            return visitor.Regions.Select(r => r.Id);
         }
 
         protected override int GetNextId()
