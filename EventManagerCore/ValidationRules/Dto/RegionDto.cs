@@ -14,6 +14,6 @@ namespace ValidationRules.Dto
         public string Description { get; set; }
         public DateTime TimeStamp { get; set; }
         public string Polygon { get; set; }
-        IEnumerable<int> VisitorIds { get; set; }
+        public IEnumerable<int> VisitorIds { get; set; }
     }
 }

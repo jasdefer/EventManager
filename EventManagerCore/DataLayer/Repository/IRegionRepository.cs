@@ -13,5 +13,6 @@ namespace DataLayer.Repository
         IEnumerable<int> GetAllVisitors(int regionId);
         void AddVisitor(int regionId, int visitorId);
         void RemoveVisitor(int regionId, int visitorId);
+        void RemoveAllVisitors(int regionId);
     }
 }

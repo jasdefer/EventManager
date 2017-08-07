@@ -167,9 +167,9 @@ SET QUOTED_IDENTIFIER ON
 CREATE TABLE [dbo].[Regions](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[Value] [int] NULL,
-	[Name] [nchar](11) NOT NULL,
+	[Name] [varchar](11) NOT NULL,
 	[TimeStamp] [datetime] NOT NULL,
-	[Description] [nchar](1024) NULL,
+	[Description] [varchar](1024) NULL,
 	[Polygon] [varchar](1024) NOT NULL,
  CONSTRAINT [PK_Regions] PRIMARY KEY CLUSTERED 
 (
@@ -193,8 +193,8 @@ SET ANSI_NULLS ON
 SET QUOTED_IDENTIFIER ON
 CREATE TABLE [dbo].[Visitors](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[Username] [nchar](64) NOT NULL,
-	[Email] [nchar](512) NOT NULL,
+	[Username] [varchar](64) NOT NULL,
+	[Email] [varchar](512) NOT NULL,
 	[PasswordHash] [varchar](2048) NOT NULL,
 	[Bio] [varchar](1024) NULL,
  CONSTRAINT [PK_Visitors] PRIMARY KEY CLUSTERED 

@@ -1,6 +1,8 @@
-﻿using DataLayer.DataModel;
+﻿using Dapper;
+using DataLayer.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +23,18 @@ namespace DataLayer.Repository.DatabaseRepository
 
         protected override string TableName => "Visitors";
 
-        public IEnumerable<Region> GetAllVisiting(int userId)
+        public IEnumerable<int> GetAllVisiting(int visitorId)
         {
-            throw new NotImplementedException();
+            Visitor visitor = Get(visitorId);
+            if (visitor == null) throw new KeyNotFoundException($"Cannot find the visitor with the id {visitorId}.");
+
+            IEnumerable<int> regionIds;
+            using (var sql = new SqlConnection(ConnectionString))
+            {
+                regionIds = sql.Query<int>($"SELECT RegionId FROM {DatabaseContext.RegionVisitorsTableName} Where VisitorId={visitor.Id}");
+            }
+
+            return regionIds;
         }
     }
 }

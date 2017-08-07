@@ -25,7 +25,7 @@ namespace ValidationRules
         public bool IsValid(string property, bool throwException = true)
         {
             if (!Required && property == null) return true;
-            if (Required && property == null) return false;
+            if (Required && property == null) return throwException ? throw new PropertyRequiredException(PropertyName) : false;
 
             if (property.Length < MinLength)
             {

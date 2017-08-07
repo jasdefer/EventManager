@@ -89,9 +89,9 @@ namespace DataLayer.Properties {
         ///CREATE TABLE [dbo].[Regions](
         ///	[Id] [int] IDENTITY(1,1) NOT NULL,
         ///	[Value] [int] NULL,
-        ///	[Name] [nchar](11) NOT NULL,
+        ///	[Name] [varchar](11) NOT NULL,
         ///	[TimeStamp] [datetime] NOT NULL,
-        ///	[Description] [nchar](1024) NULL,
+        ///	[Description] [varchar](1024) NULL,
         ///	[Polygon] [varchar](1024) NOT NULL,
         /// CONSTRAINT [PK_Regions] PRIMARY KEY CLUSTERED 
         ///(
@@ -99,7 +99,7 @@ namespace DataLayer.Properties {
         ///)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
         ///) ON [PRIMARY]
         ///
-        ///SET ANSI_N [rest of string was truncated]&quot;;.
+        ///SET AN [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CreateTables {
             get {
