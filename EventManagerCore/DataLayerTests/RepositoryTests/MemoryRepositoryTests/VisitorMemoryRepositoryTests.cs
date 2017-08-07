@@ -11,9 +11,9 @@ using DataLayer.Repository.MemoryRepository;
 namespace DataLayerTests.RepositoryTests.MemoryRepositoryTests
 {
     [TestClass]
-    public class VisitorMemoryRepositoryTests : VisitorRepositoryTestFixture
+    public class VisitorMemoryRepositoryTests : VisitorRepositoryTestFixture<VisitorMemoryRepository>
     {
-        protected override IRepository<Visitor, int> GetRepository()
+        protected override VisitorMemoryRepository GetRepository()
         {
             return new VisitorMemoryRepository();
         }

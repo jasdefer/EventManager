@@ -11,11 +11,13 @@ using DataLayer.Repository.MemoryRepository;
 namespace DataLayerTests.RepositoryTests.MemoryRepositoryTests
 {
     [TestClass]
-    public class RegionMemoryRepositoryTests : RegionRepositoryTestFixture
+    public class RegionMemoryRepositoryTests : RegionRepositoryTestFixture<RegionMemoryRepository>
     {
-        protected override IRepository<Region, int> GetRepository()
+        public override IVistorRepository VisitorRepository => new VisitorMemoryRepository();
+
+        protected override RegionMemoryRepository GetRepository()
         {
-            return new RegionMemoryRepository();
+            return new RegionMemoryRepository(new VisitorMemoryRepository());
         }
     }
 }

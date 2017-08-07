@@ -14,11 +14,13 @@ using Dapper;
 namespace DataLayerTests.RepositoryTests.DatabaseRepositoryTests
 {
     [TestClass]
-    public class RegionDatabaseRepositoryTests : RegionRepositoryTestFixture
+    public class RegionDatabaseRepositoryTests : RegionRepositoryTestFixture<RegionDatabaseRepository>
     {
         protected static string TestConnectionString = @"Data Source =(localdb)\MSSQLLocalDB; Initial Catalog = EventTestRegionsDb; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = True; ApplicationIntent = ReadWrite; MultiSubnetFailover = False;Pooling=false";
 
-        protected override IRepository<Region, int> GetRepository()
+        public override IVistorRepository VisitorRepository => new VisitorDatabaseRepository(TestConnectionString);
+
+        protected override RegionDatabaseRepository GetRepository()
         {
             return new RegionDatabaseRepository(TestConnectionString);
         }

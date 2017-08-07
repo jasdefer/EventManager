@@ -11,7 +11,7 @@ namespace DataLayer.Repository.DatabaseRepository
 {
     public abstract class DatabaseRepository<T, U> : IRepository<T, U> where T : IEntity<U> where U : IComparable
     {
-        private string ConnectionString;
+        protected string ConnectionString;
         protected abstract string TableName { get; }
         public abstract string PropertiesString { get; }
         public abstract string PropertiesStringAt { get; }
@@ -54,9 +54,7 @@ namespace DataLayer.Repository.DatabaseRepository
             T entity = default(T);
             using (var sql = new SqlConnection(ConnectionString))
             {
-                sql.Open();
                 entity = sql.QueryFirstOrDefault<T>($"select * from {TableName} where Id=${id};");
-                sql.Close();
             }
 
             return entity;
@@ -67,9 +65,7 @@ namespace DataLayer.Repository.DatabaseRepository
             IEnumerable<T> entities = null;
             using (var sql = new SqlConnection(ConnectionString))
             {
-                sql.Open();
                 entities = sql.Query<T>($"select * from {TableName};");
-                sql.Close();
             }
 
             return entities;

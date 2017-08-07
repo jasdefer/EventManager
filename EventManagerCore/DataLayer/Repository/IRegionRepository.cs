@@ -10,6 +10,8 @@ namespace DataLayer.Repository
     public interface IRegionRepository : IRepository<Region, int>
     {
         IEnumerable<Region> GetAllAfter(DateTime time);
-        IEnumerable<Visitor> GetAllVisitors(int regionId);
+        IEnumerable<int> GetAllVisitors(int regionId);
+        void AddVisitor(int regionId, int visitorId);
+        void RemoveVisitor(int regionId, int visitorId);
     }
 }

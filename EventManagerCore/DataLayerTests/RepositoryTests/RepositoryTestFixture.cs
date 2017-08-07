@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 namespace DataLayerTests.RepositoryTests
 {
     [TestClass]
-    public abstract class RepositoryTestFixture<T,U> where T:IEntity<U> where U:IComparable
+    public abstract class RepositoryTestFixture<T,U, V> where T:IEntity<U> where U:IComparable where V:IRepository<T,U>
     {
-        private IRepository<T, U> Repository;
+        protected V Repository;
         
 
         [TestInitialize]
@@ -61,6 +61,6 @@ namespace DataLayerTests.RepositoryTests
 
         protected abstract T UpdateEntity(T entity);
         protected abstract T CreateEntity();
-        protected abstract IRepository<T, U> GetRepository();
+        protected abstract V GetRepository();
     }
 }

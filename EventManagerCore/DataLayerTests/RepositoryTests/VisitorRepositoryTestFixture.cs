@@ -1,4 +1,5 @@
 ﻿using DataLayer.DataModel;
+using DataLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataLayerTests.RepositoryTests
 {
-    public abstract class VisitorRepositoryTestFixture : RepositoryTestFixture<Visitor,int>
+    public abstract class VisitorRepositoryTestFixture<V> : RepositoryTestFixture<Visitor,int,V> where V:IVistorRepository
     {
         protected override Visitor CreateEntity()
         {

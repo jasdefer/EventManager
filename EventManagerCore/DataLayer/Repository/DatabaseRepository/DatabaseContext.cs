@@ -13,6 +13,10 @@ namespace DataLayer.Repository.DatabaseRepository
 {
     public class DatabaseContext
     {
+        public const string RegionsTableName = "Regions";
+        public const string VisitorsTableName = "Visitors";
+        public const string RegionVisitorsTableName = "RegionVisitors";
+
         /// <summary>
         /// Create the database if it does not exist already.
         /// </summary>

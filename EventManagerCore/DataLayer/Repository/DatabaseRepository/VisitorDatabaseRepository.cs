@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Repository.DatabaseRepository
 {
-    public class VisitorDatabaseRepository : DatabaseRepository<Visitor, int>
+    public class VisitorDatabaseRepository : DatabaseRepository<Visitor, int>, IVistorRepository
     {
         public VisitorDatabaseRepository(string connectionString) : base(connectionString)
         {
@@ -20,5 +20,10 @@ namespace DataLayer.Repository.DatabaseRepository
         public override string PropertiesStringUpdate => "Username=@Username,Email=@Email,PasswordHash=@PasswordHash,Bio=@Bio";
 
         protected override string TableName => "Visitors";
+
+        public IEnumerable<Region> GetAllVisiting(int userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
