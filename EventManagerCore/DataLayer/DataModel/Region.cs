@@ -10,19 +10,7 @@ namespace DataLayer.DataModel
 {
     public class Region : IEntity<int>
     {
-        public Region(string name, DateTime timeStamp, string polygon)
-        {
-            Name = name;
-            TimeStamp = timeStamp;
-            Polygon = polygon;
-
-            RegionValidation.Name.IsValid(Name);
-            RegionValidation.TimeStamp.IsValid(TimeStamp);
-            RegionValidation.Polygon.IsValid(Polygon);
-        }
-
         public int Id { get; set; }
-
         public int? Value { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

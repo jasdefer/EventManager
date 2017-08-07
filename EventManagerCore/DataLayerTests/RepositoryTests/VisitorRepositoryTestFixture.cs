@@ -11,7 +11,12 @@ namespace DataLayerTests.RepositoryTests
     {
         protected override Visitor CreateEntity()
         {
-            return new Visitor("testusername", "test@email.com");
+            return new Visitor()
+            {
+                Email = "RandomVisitor@email.org",
+                Username = "RandomVisitor",
+                PasswordHash = "SuperSecurePasswordHash123",
+            };
         }
 
         protected override Visitor UpdateEntity(Visitor entity)

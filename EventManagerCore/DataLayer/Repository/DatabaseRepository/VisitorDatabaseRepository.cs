@@ -13,6 +13,12 @@ namespace DataLayer.Repository.DatabaseRepository
         {
         }
 
+        public override string PropertiesString => "Username,Email,PasswordHash,Bio";
+
+        public override string PropertiesStringAt => "@Username,@Email,@PasswordHash,@Bio";
+
+        public override string PropertiesStringUpdate => "Username=@Username,Email=@Email,PasswordHash=@PasswordHash,Bio=@Bio";
+
         protected override string TableName => "Visitors";
     }
 }

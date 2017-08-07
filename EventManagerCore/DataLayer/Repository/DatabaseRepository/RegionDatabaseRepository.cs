@@ -13,6 +13,12 @@ namespace DataLayer.Repository.DatabaseRepository
         {
         }
 
+        public override string PropertiesString => "Name,Description,Polygon,Value,TimeStamp";
+
+        public override string PropertiesStringAt => "@Name,@Description,@Polygon,@Value,@TimeStamp";
+
+        public override string PropertiesStringUpdate => "Name=@Name,Description=@Description,Polygon=@Polygon,Value=@Value,TimeStamp=@TimeStamp";
+
         protected override string TableName => "Regions";
     }
 }

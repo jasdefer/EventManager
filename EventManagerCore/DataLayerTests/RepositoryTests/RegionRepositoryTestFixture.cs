@@ -13,7 +13,12 @@ namespace DataLayerTests.RepositoryTests
     {
         protected override Region CreateEntity()
         {
-            return new Region("testregion", new DateTime(2010, 01, 01), "testpolygon");
+            return new Region
+            {
+                Name = "testregion",
+                TimeStamp = new DateTime(2010,01,01),
+                Polygon = "testpolygon",
+            };
         }
 
         protected override Region UpdateEntity(Region entity)

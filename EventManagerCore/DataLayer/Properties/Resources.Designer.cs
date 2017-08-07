@@ -62,24 +62,19 @@ namespace DataLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to USE [master]
-        ///GO
-        ////****** Object:  Table [dbo].[Regions]    Script Date: 04-Aug-17 6:26:08 PM ******/
-        ///SET ANSI_NULLS ON
-        ///GO
-        ///SET QUOTED_IDENTIFIER ON
-        ///GO
-        ///CREATE TABLE [dbo].[Regions](
-        ///	[Id] [int] IDENTITY(1,1) NOT NULL,
-        ///	[Value] [int] NULL,
-        ///	[Name] [nchar](11) NOT NULL,
-        ///	[TimeStamp] [datetime] NOT NULL,
-        ///	[Description] [nchar](1024) NULL,
-        ///	[Polygon] [varchar](1024) NOT NULL,
-        /// CONSTRAINT [PK_Regions] PRIMARY KEY CLUSTERED 
-        ///(
-        ///	[Id] ASC
-        ///)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DU [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to CREATE DATABASE [{0}]
+        /// CONTAINMENT = NONE
+        /// ON  PRIMARY 
+        ///( NAME = N&apos;{0}&apos;, FILENAME = N&apos;{1}{0}.mdf&apos; , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+        /// LOG ON 
+        ///( NAME = N&apos;{0}_log&apos;, FILENAME = N&apos;{1}{0}_log.ldf&apos; , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+        ///ALTER DATABASE [{0}] SET COMPATIBILITY_LEVEL = 120
+        ///IF (1 = FULLTEXTSERVICEPROPERTY(&apos;IsFullTextInstalled&apos;))
+        ///begin
+        ///EXEC [{0}].[dbo].[sp_fulltext_database] @action = &apos;enable&apos;
+        ///end
+        ///ALTER DATABASE [{0}] SET ANSI_NULL_DEFAULT OFF 
+        ///ALT [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CreateDatabase {
             get {
@@ -88,13 +83,9 @@ namespace DataLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to USE [EventTestDb]
-        ///GO
-        ////****** Object:  Table [dbo].[Regions]    Script Date: 04-Aug-17 6:26:08 PM ******/
+        ///   Looks up a localized string similar to USE [{0}]
         ///SET ANSI_NULLS ON
-        ///GO
         ///SET QUOTED_IDENTIFIER ON
-        ///GO
         ///CREATE TABLE [dbo].[Regions](
         ///	[Id] [int] IDENTITY(1,1) NOT NULL,
         ///	[Value] [int] NULL,
@@ -105,7 +96,10 @@ namespace DataLayer.Properties {
         /// CONSTRAINT [PK_Regions] PRIMARY KEY CLUSTERED 
         ///(
         ///	[Id] ASC
-        ///)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNO [rest of string was truncated]&quot;;.
+        ///)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ///) ON [PRIMARY]
+        ///
+        ///SET ANSI_N [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string CreateTables {
             get {
@@ -114,13 +108,21 @@ namespace DataLayer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to USE [EventTestDb]
-        ///GO
+        ///   Looks up a localized string similar to If(db_id(N&apos;{0}&apos;) IS NULL) select 0 else select 1;.
+        /// </summary>
+        internal static string DoesDbExists {
+            get {
+                return ResourceManager.GetString("DoesDbExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USE [{0}]
         ///SET IDENTITY_INSERT [dbo].[Visitors] ON 
         ///
         ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (2, N&apos;jochen&apos;, N&apos;jochen@email.com&apos;, N&apos;SECURE HASH&apos;, N&apos;I am an awesome guy.&apos;)
         ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (3, N&apos;hans&apos;, N&apos;hans@email.com&apos;, N&apos;SECURE HASH&apos;, N&apos;I am an even better guy.&apos;)
-        ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (4, N&apos;peter&apos;, N&apos;peter@email.com&apos;, N&apos;SECURE  [rest of string was truncated]&quot;;.
+        ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (4, N&apos;peter&apos;, N&apos;peter@email.com&apos;, N&apos;SECURE HASH&apos;, NULL) [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SeedTestDatabase {
             get {
