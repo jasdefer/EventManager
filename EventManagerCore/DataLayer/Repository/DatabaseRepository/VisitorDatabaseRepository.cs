@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using DataLayer.DataModel;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,6 +14,11 @@ namespace DataLayer.Repository.DatabaseRepository
     {
         public VisitorDatabaseRepository(string connectionString) : base(connectionString)
         {
+        }
+
+        public VisitorDatabaseRepository(IConfigurationRoot config) :base(config["ConnectionString"])
+        {
+
         }
 
         public override string PropertiesString => "Username,Email,PasswordHash,Bio";

@@ -218,22 +218,4 @@ ALTER TABLE [dbo].[RegionVisitors] CHECK CONSTRAINT [FK_VisitorId]</value>
   <data name="DoesDbExists" xml:space="preserve">
     <value>If(db_id(N'{0}') IS NULL) select 0 else select 1;</value>
   </data>
-  <data name="SeedTestDatabase" xml:space="preserve">
-    <value>USE [{0}]
-SET IDENTITY_INSERT [dbo].[Visitors] ON 
-
-INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (2, N'jochen', N'jochen@email.com', N'SECURE HASH', N'I am an awesome guy.')
-INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (3, N'hans', N'hans@email.com', N'SECURE HASH', N'I am an even better guy.')
-INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (4, N'peter', N'peter@email.com', N'SECURE HASH', NULL)
-SET IDENTITY_INSERT [dbo].[Visitors] OFF
-SET IDENTITY_INSERT [dbo].[Regions] ON 
-
-INSERT [dbo].[Regions] ([Id], [Value], [Name], [TimeStamp], [Description], [Polygon]) VALUES (2, 1, N'Region One ', CAST(N'2010-01-20T10:23:55.000' AS DateTime), N'A brief description of this region.', N'polygon data')
-INSERT [dbo].[Regions] ([Id], [Value], [Name], [TimeStamp], [Description], [Polygon]) VALUES (3, 10, N'Region Two ', CAST(N'2010-01-01T00:00:00.000' AS DateTime), NULL, N'polygon data')
-INSERT [dbo].[Regions] ([Id], [Value], [Name], [TimeStamp], [Description], [Polygon]) VALUES (7, 5, N'RegionThree', CAST(N'2017-12-12T10:10:00.000' AS DateTime), N'This is another description for this awesome region.', N'polygon data')
-SET IDENTITY_INSERT [dbo].[Regions] OFF
-INSERT [dbo].[RegionVisitors] ([VisitorId], [RegionId]) VALUES (2, 2)
-INSERT [dbo].[RegionVisitors] ([VisitorId], [RegionId]) VALUES (2, 3)
-INSERT [dbo].[RegionVisitors] ([VisitorId], [RegionId]) VALUES (4, 3)</value>
-  </data>
 </root>

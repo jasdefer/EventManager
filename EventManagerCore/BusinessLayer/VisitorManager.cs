@@ -113,5 +113,18 @@ namespace BusinessLayer
             dto.RegionIds = VisitorRepository.GetAllVisiting(visitorId);
             return dto;
         }
+
+        public IEnumerable<VisitorDto> Get()
+        {
+            IEnumerable<Visitor> visitors = VisitorRepository.GetAll();
+            List<VisitorDto> dtos = Mapper.Map<List<VisitorDto>>(visitors);
+
+            foreach (var dto in dtos)
+            {
+                dto.RegionIds = VisitorRepository.GetAllVisiting(dto.Id);
+            }
+
+            return dtos;
+        }
     }
 }
