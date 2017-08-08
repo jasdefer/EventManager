@@ -39,6 +39,22 @@ namespace EventApi.Controllers
             return BadRequest();
         }
 
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                IEnumerable<VisitorDto> visitors = VisitorManager.Get();
+                return Ok(visitors);
+            }
+            catch (Exception e)
+            {
+                Logger.LogWarning(2, e, "Cannot get all visitors.");
+            }
+
+            return BadRequest();
+        }
+
         [HttpPost]
         public IActionResult Add([FromBody]VisitorDto dto)
         {

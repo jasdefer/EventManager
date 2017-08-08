@@ -24,6 +24,39 @@ namespace EventApi.Controllers
             Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
+        [HttpGet("{id}", Name = "RegionGet")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                RegionDto dto = RegionManager.Get(id);
+                if (dto == null) return NotFound();
+                return Ok(dto);
+            }
+            catch (Exception e)
+            {
+                Logger.LogWarning(1, e, $"Cannot get region {id}.");
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            try
+            {
+                IEnumerable<RegionDto> regions = RegionManager.Get();
+                return Ok(regions);
+            }
+            catch (Exception e)
+            {
+                Logger.LogWarning(1, e, "Cannot get all regions.");
+            }
+
+            return BadRequest();
+        }
+
         [HttpPost]
         public IActionResult Add([FromBody]RegionDto dto)
         {
@@ -53,23 +86,6 @@ namespace EventApi.Controllers
             {
                 if (e is KeyNotFoundException) return NotFound();
                 else Logger.LogWarning(1, e, $"Cannot update region");
-            }
-
-            return BadRequest();
-        }
-
-        [HttpGet("{id}", Name = "RegionGet")]
-        public IActionResult Get(int id)
-        {
-            try
-            {
-                RegionDto dto = RegionManager.Get(id);
-                if (dto == null) return NotFound();
-                return Ok(dto);
-            }
-            catch (Exception e)
-            {
-                Logger.LogWarning(1,e, $"Cannot get region {id}.");
             }
 
             return BadRequest();
