@@ -1,12 +1,10 @@
 ﻿using Dapper;
 using DataLayer.DataModel;
 using DataLayer.Repository.DatabaseRepository.DatabaseExceptions;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Repository.DatabaseRepository
 {
@@ -14,6 +12,11 @@ namespace DataLayer.Repository.DatabaseRepository
     {
         public RegionDatabaseRepository(string connectionString) : base(connectionString)
         {
+        }
+
+        public RegionDatabaseRepository(IConfigurationRoot config) :base(config["ConnectionString"])
+        {
+            
         }
 
         public override string PropertiesString => "Name,Description,Polygon,Value,TimeStamp";

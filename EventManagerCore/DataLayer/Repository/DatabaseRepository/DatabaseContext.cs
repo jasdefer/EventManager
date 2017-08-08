@@ -22,7 +22,7 @@ namespace DataLayer.Repository.DatabaseRepository
         /// </summary>
         /// <param name="connectionString">The connection string to the database.</param>
         /// <param name="path">The path where the database will be created.</param>
-        public static void CreateDb(string connectionString, string path = null)
+        public static void CreateDb(string connectionString, bool recreate = false, string path = null)
         {
             path = path ?? Path.GetTempPath();
 
@@ -33,9 +33,18 @@ namespace DataLayer.Repository.DatabaseRepository
             //Check if the database exist. Use the master connection of the database for this operation
             bool exists = false;
             builder.InitialCatalog = "master";
+            
+
             using (var sql = new SqlConnection(builder.ConnectionString))
             {
                 exists = sql.QuerySingle<bool>(string.Format(Resources.DoesDbExists,dbName));
+
+                if (exists && recreate)
+                {
+                    sql.Execute($"Drop database {dbName}");
+                    exists = false;
+                }
+
                 if (!exists)
                 {
                     //Create the database
@@ -50,6 +59,15 @@ namespace DataLayer.Repository.DatabaseRepository
                 {
                     sql.Execute(string.Format(Resources.CreateTables, dbName));
                 }
+            }
+        }
+
+        public static void SeedDb(string connectionString)
+        {
+            var builder = new SqlConnectionStringBuilder(connectionString);
+            using (var sql = new SqlConnection(connectionString))
+            {
+                sql.Execute(string.Format(Resources.SeedTestDatabase,builder.InitialCatalog));
             }
         }
     }

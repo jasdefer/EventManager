@@ -55,7 +55,7 @@ namespace BusinessLayer
         public void Delete(int regionId)
         {
             //Load the region
-            Region region = RegionRepository.Get(regionId) ?? throw new BusinessException("Cannot find region with the id " + regionId);
+            Region region = RegionRepository.Get(regionId) ?? throw new KeyNotFoundException("Cannot find region with the id " + regionId);
 
             //Delete the visits
             RegionRepository.RemoveAllVisitors(regionId);
@@ -69,11 +69,12 @@ namespace BusinessLayer
             //Load and validate the region
             if (dto == null) throw new ArgumentNullException(nameof(dto));
             Region region = RegionRepository.Get(dto.Id);
-            if (region == null) throw new BusinessException("Cannot find the region with the id " + dto.Id);
+            if (region == null) throw new KeyNotFoundException("Cannot find the region with the id " + dto.Id);
             Mapper.Map(dto, region);
             region.IsValid();
 
             //Check if only existing visitors are visiting the region
+            dto.VisitorIds = dto.VisitorIds ?? new List<int>();
             foreach (var visitorId in dto.VisitorIds)
             {
                 if (VisitorRepository.Get(visitorId) == null) throw new BusinessException("Cannot add a region with unkown visitors.");
@@ -99,6 +100,9 @@ namespace BusinessLayer
 
         }
 
+        /// <summary>
+        /// Get the region with the given id.
+        /// </summary>
         public RegionDto Get(int regionId)
         {
             Region region = RegionRepository.Get(regionId);
