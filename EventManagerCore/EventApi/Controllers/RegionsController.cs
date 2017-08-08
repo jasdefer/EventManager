@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using BusinessLayer.BusinessExceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,7 +12,9 @@ using ValidationRules.Dto;
 
 namespace EventApi.Controllers
 {
+    
     [Route("api/[controller]")]
+    [Authorize]
     public class RegionsController : Controller
     {
         private readonly RegionManager RegionManager;

@@ -115,19 +115,5 @@ namespace DataLayer.Properties {
                 return ResourceManager.GetString("DoesDbExists", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to USE [{0}]
-        ///SET IDENTITY_INSERT [dbo].[Visitors] ON 
-        ///
-        ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (2, N&apos;jochen&apos;, N&apos;jochen@email.com&apos;, N&apos;SECURE HASH&apos;, N&apos;I am an awesome guy.&apos;)
-        ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (3, N&apos;hans&apos;, N&apos;hans@email.com&apos;, N&apos;SECURE HASH&apos;, N&apos;I am an even better guy.&apos;)
-        ///INSERT [dbo].[Visitors] ([Id], [Username], [Email], [PasswordHash], [Bio]) VALUES (4, N&apos;peter&apos;, N&apos;peter@email.com&apos;, N&apos;SECURE HASH&apos;, NULL) [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string SeedTestDatabase {
-            get {
-                return ResourceManager.GetString("SeedTestDatabase", resourceCulture);
-            }
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -10,6 +11,7 @@ using ValidationRules.Dto;
 
 namespace EventApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class VisitorsController : Controller
     {

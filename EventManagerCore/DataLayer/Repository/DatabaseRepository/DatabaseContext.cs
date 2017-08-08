@@ -61,14 +61,5 @@ namespace DataLayer.Repository.DatabaseRepository
                 }
             }
         }
-
-        public static void SeedDb(string connectionString)
-        {
-            var builder = new SqlConnectionStringBuilder(connectionString);
-            using (var sql = new SqlConnection(connectionString))
-            {
-                sql.Execute(string.Format(Resources.SeedTestDatabase,builder.InitialCatalog));
-            }
-        }
     }
 }
