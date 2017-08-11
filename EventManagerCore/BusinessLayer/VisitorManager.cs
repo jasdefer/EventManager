@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValidationRules.Dto;
+using DataTransfer;
 using AutoMapper;
 using DataLayer.DataModel;
-using ValidationRules.PropertyValidation;
 using BusinessLayer.BusinessExceptions;
 
 namespace BusinessLayer
@@ -32,7 +31,6 @@ namespace BusinessLayer
             //Validate the input
             if (dto == null) throw new ArgumentNullException(nameof(dto));
             Visitor visitor = Mapper.Map<Visitor>(dto);
-            visitor.IsValid();
             dto.RegionIds = dto.RegionIds ?? new List<int>();
             foreach (var regionId in dto.RegionIds)
             {
@@ -59,7 +57,6 @@ namespace BusinessLayer
             Visitor visitor = VisitorRepository.Get(dto.Id);
             if (visitor == null) throw new BusinessException("Cannot find an existing visitor with the id " + dto.Id);
             Mapper.Map(dto, visitor);
-            visitor.IsValid();
 
             //Check if only existing regions exist within the visitor
             foreach (var regionId in dto.RegionIds)

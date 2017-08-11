@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
-    <ProjectReference Include="..\ValidationRules\ValidationRules.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ValidationRules.Dto;
+using DataTransfer;
 
 namespace BusinessLayer
 {
@@ -30,7 +30,6 @@ namespace BusinessLayer
         {
             if (dto == null) throw new ArgumentNullException(nameof(dto));
             Region region = Mapper.Map<Region>(dto);
-            region.IsValid();
             dto.VisitorIds = dto.VisitorIds ?? new List<int>();
 
             //Check if only existing visitors are visiting the new region
@@ -71,7 +70,6 @@ namespace BusinessLayer
             Region region = RegionRepository.Get(dto.Id);
             if (region == null) throw new KeyNotFoundException("Cannot find the region with the id " + dto.Id);
             Mapper.Map(dto, region);
-            region.IsValid();
 
             //Check if only existing visitors are visiting the region
             dto.VisitorIds = dto.VisitorIds ?? new List<int>();

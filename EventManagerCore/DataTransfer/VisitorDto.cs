@@ -1,9 +1,12 @@
-﻿using DataLayer.Repository;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DataLayer.DataModel
+namespace DataTransfer
 {
-    public class Visitor : IEntity<int>
+    public class VisitorDto
     {
         public int Id { get; set; }
         public string Username { get; set; }
@@ -11,6 +14,6 @@ namespace DataLayer.DataModel
         public string PasswordHash { get; set; }
         public string Bio { get; set; }
 
-        public IEnumerable<Region> Regions { get; set; }
+        public IEnumerable<int> RegionIds { get; set; }
     }
 }

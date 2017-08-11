@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValidationRules.PropertyValidation;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EventApi.Model
 {

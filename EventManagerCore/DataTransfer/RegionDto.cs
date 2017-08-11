@@ -1,13 +1,10 @@
-﻿using DataLayer.Repository;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataLayer.DataModel
+namespace DataTransfer
 {
-    public class Region : IEntity<int>
+    public class RegionDto
     {
         public int Id { get; set; }
         public int? Value { get; set; }
@@ -16,7 +13,6 @@ namespace DataLayer.DataModel
         public DateTime TimeStamp { get; set; }
         public string Polygon { get; set; }
 
-        public IEnumerable<Visitor> Visitors { get; set; }
+        public IEnumerable<int> VisitorIds { get; set; }
     }
 }
-

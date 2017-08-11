@@ -13,7 +13,7 @@ using AutoMapper;
 using BusinessLayer;
 using DataLayer.DataModel;
 using EventApi.Model;
-using ValidationRules.Dto;
+using DataTransfer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;

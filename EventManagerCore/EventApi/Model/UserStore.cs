@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using DataLayer.DataModel;
 using BusinessLayer;
-using ValidationRules.Dto;
+using DataTransfer;
 
 namespace EventApi.Model
 {

@@ -5,7 +5,7 @@ using AutoMapper;
 using BusinessLayer.Mapping;
 using DataLayer.Repository.DatabaseRepository;
 using DataLayer.Repository;
-using ValidationRules.Dto;
+using DataTransfer;
 using DataLayer.DataModel;
 using System.Collections.Generic;
 
