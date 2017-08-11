@@ -1,9 +1,7 @@
 ﻿using DataTransfer;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using BusinessLayer;
@@ -11,29 +9,27 @@ using Microsoft.Extensions.Logging;
 
 namespace EventApi.Services.Identity
 {
-    public class UserStore : IUserStore<VisitorDto>, IUserEmailStore<VisitorDto>
+    public class UserStore : IUserEmailStore<VisitorDto>
     {
-        private readonly VisitorManager VisitorManager;
-        private readonly IPasswordHasher<VisitorDto> Hasher;
-        private readonly ILogger<UserStore> Logger;
+        private readonly VisitorManager _visitorManager;
+        private readonly ILogger<UserStore> _logger;
 
-        public UserStore(VisitorManager visitorManager, IPasswordHasher<VisitorDto> hasher, ILogger<UserStore> logger)
+        public UserStore(VisitorManager visitorManager, ILogger<UserStore> logger)
         {
-            VisitorManager = visitorManager ?? throw new ArgumentNullException(nameof(visitorManager));
-            Hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
-            Logger = logger;
+            _visitorManager = visitorManager ?? throw new ArgumentNullException(nameof(visitorManager));
+            _logger = logger;
         }
 
         public async Task<IdentityResult> CreateAsync(VisitorDto user, CancellationToken cancellationToken)
         {
             try
             {
-                await Task.Run(() => VisitorManager.Add(user));
+                await Task.Run(() => _visitorManager.Add(user));
                 return IdentityResult.Success;
             }
             catch (Exception e)
             {
-                Logger.LogWarning(4, e, "Cannot create visitor");
+                _logger.LogWarning(4, e, "Cannot create visitor");
                 return IdentityResult.Failed();
             }
         }
@@ -42,12 +38,12 @@ namespace EventApi.Services.Identity
         {
             try
             {
-                await Task.Run(() => VisitorManager.Delete(user.Id));
+                await Task.Run(() => _visitorManager.Delete(user.Id));
                 return IdentityResult.Success;
             }
             catch (Exception e)
             {
-                Logger.LogWarning(4, e, "Cannot delete visitor");
+                _logger.LogWarning(4, e, "Cannot delete visitor");
                 return IdentityResult.Failed();
             }
         }
@@ -62,11 +58,11 @@ namespace EventApi.Services.Identity
             VisitorDto visitor = null;
             try
             {
-                visitor = await Task.Run(() => VisitorManager.Get().SingleOrDefault(v => v.Email.ToUpperInvariant()==normalizedEmail));
+                visitor = await Task.Run(() => _visitorManager.Get().SingleOrDefault(v => v.Email.ToUpperInvariant()==normalizedEmail));
             }
             catch (Exception e)
             {
-                Logger.LogWarning(4, e, "Cannot search for email.");
+                _logger.LogWarning(4, e, "Cannot search for email.");
             }
 
             return visitor;
@@ -77,11 +73,11 @@ namespace EventApi.Services.Identity
             VisitorDto visitor = null;
             try
             {
-                visitor = await Task.Run(() => VisitorManager.Get(int.Parse(userId)));
+                visitor = await Task.Run(() => _visitorManager.Get(int.Parse(userId)));
             }
             catch (Exception e)
             {
-                Logger.LogWarning(4, e, "Cannot search for email.");
+                _logger.LogWarning(4, e, "Cannot search for email.");
             }
 
             return visitor;
@@ -92,11 +88,11 @@ namespace EventApi.Services.Identity
             VisitorDto visitor = null;
             try
             {
-                visitor = await Task.Run(() => VisitorManager.Get().SingleOrDefault(v => v.Username.ToUpperInvariant() == normalizedUserName));
+                visitor = await Task.Run(() => _visitorManager.Get().SingleOrDefault(v => v.Username.ToUpperInvariant() == normalizedUserName));
             }
             catch (Exception e)
             {
-                Logger.LogWarning(4, e, "Cannot search for email.");
+                _logger.LogWarning(4, e, "Cannot search for email.");
             }
 
             return visitor;
@@ -161,12 +157,12 @@ namespace EventApi.Services.Identity
         {
             try
             {
-                await Task.Run(() => VisitorManager.Update(user));
+                await Task.Run(() => _visitorManager.Update(user));
                 return IdentityResult.Success;
             }
             catch (Exception e)
             {
-                Logger.LogWarning(4, e, "Cannot update user");
+                _logger.LogWarning(4, e, "Cannot update user");
             }
 
             return IdentityResult.Failed();

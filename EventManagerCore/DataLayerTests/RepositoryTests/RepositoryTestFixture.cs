@@ -1,17 +1,13 @@
 ﻿using DataLayer.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayerTests.RepositoryTests
 {
     [TestClass]
-    public abstract class RepositoryTestFixture<T,U, V> where T:IEntity<U> where U:IComparable where V:IRepository<T,U>
+    public abstract class RepositoryTestFixture<T,TU, TV> where T:IEntity<TU> where TU:IComparable where TV:IRepository<T,TU>
     {
-        protected V Repository;
+        protected TV Repository;
         
 
         [TestInitialize]
@@ -25,7 +21,7 @@ namespace DataLayerTests.RepositoryTests
         {
             T entity = CreateEntity();
             Repository.Add(entity);
-            Assert.AreNotEqual(0,entity.Id.CompareTo(default(U)));
+            Assert.AreNotEqual(0,entity.Id.CompareTo(default(TU)));
         }
 
         [TestMethod]
@@ -42,7 +38,7 @@ namespace DataLayerTests.RepositoryTests
         {
             T entity = CreateEntity();
             Repository.Add(entity);
-            U id = entity.Id;
+            TU id = entity.Id;
             Repository.Delete(id);
             Assert.AreEqual(null, Repository.Get(id));
         }
@@ -61,6 +57,6 @@ namespace DataLayerTests.RepositoryTests
 
         protected abstract T UpdateEntity(T entity);
         protected abstract T CreateEntity();
-        protected abstract V GetRepository();
+        protected abstract TV GetRepository();
     }
 }

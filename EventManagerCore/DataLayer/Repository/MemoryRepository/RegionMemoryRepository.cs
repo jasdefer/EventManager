@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataLayer.DataModel;
 
 namespace DataLayer.Repository.MemoryRepository
 {
     public class RegionMemoryRepository : MemoryRepository<Region, int>, IRegionRepository
     {
-        private readonly VisitorMemoryRepository VisitorMemoryRepository;
+        private readonly VisitorMemoryRepository _visitorMemoryRepository;
 
 
         public RegionMemoryRepository(VisitorMemoryRepository visitorMemoryRepository)
         {
-            VisitorMemoryRepository = visitorMemoryRepository;
+            _visitorMemoryRepository = visitorMemoryRepository;
         }
 
         public void AddVisitor(int regionId, int visitorId)
@@ -22,7 +20,7 @@ namespace DataLayer.Repository.MemoryRepository
             Region region = Get(regionId);
             if (region == null) throw new KeyNotFoundException($"No region with the id {regionId} found.");
 
-            Visitor visitor = VisitorMemoryRepository.Get(visitorId);
+            Visitor visitor = _visitorMemoryRepository.Get(visitorId);
             if (visitor == null) throw new KeyNotFoundException($"No visitor with the id {visitorId} found.");
 
             var visitors = region.Visitors?.ToList() ?? new List<Visitor>();

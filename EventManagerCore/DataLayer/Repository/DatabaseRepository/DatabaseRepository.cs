@@ -3,13 +3,10 @@ using DataLayer.Repository.DatabaseRepository.DatabaseExceptions;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Repository.DatabaseRepository
 {
-    public abstract class DatabaseRepository<T, U> : IRepository<T, U> where T : IEntity<U> where U : IComparable
+    public abstract class DatabaseRepository<T, TU> : IRepository<T, TU> where T : IEntity<TU> where TU : IComparable
     {
         protected string ConnectionString;
         protected abstract string TableName { get; }
@@ -17,9 +14,9 @@ namespace DataLayer.Repository.DatabaseRepository
         public abstract string PropertiesStringAt { get; }
         public abstract string PropertiesStringUpdate { get; }
 
-        public DatabaseRepository(string connectionString)
+        protected DatabaseRepository(string connectionString)
         {
-            ConnectionString = connectionString ?? throw new ArgumentNullException(connectionString);
+            ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             DatabaseContext.CreateDb(ConnectionString);
         }
 
@@ -28,18 +25,18 @@ namespace DataLayer.Repository.DatabaseRepository
             if (entity == null) throw new ArgumentNullException(nameof(entity));
             using (var sql = new SqlConnection(ConnectionString))
             {
-                U id = sql.ExecuteScalar<U>($"INSERT INTO {TableName} ({PropertiesString}) VALUES ({PropertiesStringAt});SELECT SCOPE_IDENTITY();",entity);
+                TU id = sql.ExecuteScalar<TU>($"INSERT INTO {TableName} ({PropertiesString}) VALUES ({PropertiesStringAt});SELECT SCOPE_IDENTITY();",entity);
                 entity.Id = id;
             }
             return entity;
         }
 
-        public void Delete(U id)
+        public void Delete(TU id)
         {
             T entity = Get(id);
             if (entity == null) throw new KeyNotFoundException($"Cannot find the entity with the id {id} in {TableName}");
 
-            int affectedRows = 0;
+            int affectedRows;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 affectedRows = sql.Execute($"DELETE FROM {TableName} where Id={entity.Id};");
@@ -49,9 +46,9 @@ namespace DataLayer.Repository.DatabaseRepository
             if (affectedRows > 1) throw new DatabaseException($"Deleted {affectedRows} rows instead of 1.");
         }
 
-        public T Get(U id)
+        public T Get(TU id)
         {
-            T entity = default(T);
+            T entity;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 entity = sql.QueryFirstOrDefault<T>($"select * from {TableName} where Id=${id};");
@@ -62,7 +59,7 @@ namespace DataLayer.Repository.DatabaseRepository
 
         public IEnumerable<T> GetAll()
         {
-            IEnumerable<T> entities = null;
+            IEnumerable<T> entities;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 entities = sql.Query<T>($"select * from {TableName};");
@@ -74,7 +71,7 @@ namespace DataLayer.Repository.DatabaseRepository
         public void Update(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
-            int affectedRows = 0;
+            int affectedRows;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 affectedRows = sql.Execute($"Update {TableName} SET {PropertiesStringUpdate} where Id={entity.Id};",entity);

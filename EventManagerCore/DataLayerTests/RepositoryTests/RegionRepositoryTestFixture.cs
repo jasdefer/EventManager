@@ -1,16 +1,12 @@
 ﻿using DataLayer.DataModel;
 using DataLayer.Repository;
-using DataLayer.Repository.MemoryRepository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayerTests.RepositoryTests
 {
-    public abstract class RegionRepositoryTestFixture<V> : RepositoryTestFixture<Region,int,V> where V:IRegionRepository
+    public abstract class RegionRepositoryTestFixture<TV> : RepositoryTestFixture<Region,int,TV> where TV:IRegionRepository
     {
         public abstract IVistorRepository VisitorRepository { get; }
         protected override Region CreateEntity()
@@ -36,7 +32,7 @@ namespace DataLayerTests.RepositoryTests
             Repository.Add(region);
             var regions = Repository.GetAllAfter(region.TimeStamp.AddDays(-1));
             Assert.IsNotNull(regions);
-            Assert.IsTrue(regions.Count() > 0);
+            Assert.IsTrue(regions.Any());
         }
 
         [TestMethod]
@@ -54,10 +50,10 @@ namespace DataLayerTests.RepositoryTests
             visitor = VisitorRepository.Add(visitor);
 
             Repository.AddVisitor(region.Id, visitor.Id);
-            var visitors = Repository.GetAllVisitors(region.Id);
+            var visitors = Repository.GetAllVisitors(region.Id).ToArray();
 
             Assert.IsNotNull(visitors);
-            Assert.AreEqual(1, visitors.Count());
+            Assert.AreEqual(1, visitors.Length);
             Assert.IsTrue(visitors.Single().CompareTo(visitor.Id) == 0);
         }
 

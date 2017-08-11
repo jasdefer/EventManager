@@ -5,47 +5,45 @@ using DataLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataTransfer;
 
 namespace BusinessLayer
 {
     public class RegionManager
     {
-        private readonly IVistorRepository VisitorRepository;
-        private readonly IMapper Mapper;
-        private readonly IRegionRepository RegionRepository;
+        private readonly IVistorRepository _visitorRepository;
+        private readonly IMapper _mapper;
+        private readonly IRegionRepository _regionRepository;
 
         public RegionManager(IVistorRepository visitorRepository,
             IMapper mapper,
             IRegionRepository regionRepository)
         {
-            VisitorRepository = visitorRepository ?? throw new ArgumentNullException(nameof(visitorRepository));
-            Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            RegionRepository = regionRepository ?? throw new ArgumentNullException(nameof(regionRepository));
+            _visitorRepository = visitorRepository ?? throw new ArgumentNullException(nameof(visitorRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _regionRepository = regionRepository ?? throw new ArgumentNullException(nameof(regionRepository));
         }
 
         public int Add(RegionDto dto)
         {
             if (dto == null) throw new ArgumentNullException(nameof(dto));
-            Region region = Mapper.Map<Region>(dto);
-            dto.VisitorIds = dto.VisitorIds ?? new List<int>();
+            Region region = _mapper.Map<Region>(dto);
+            int[] vistorIds = dto.VisitorIds?.ToArray() ?? new int[0];
 
             //Check if only existing visitors are visiting the new region
-            foreach (var visitorId in dto.VisitorIds)
+            foreach (var visitorId in vistorIds)
             {
-                if(VisitorRepository.Get(visitorId) == null) throw new BusinessException("Cannot add a region with unkown visitors.");
+                if(_visitorRepository.Get(visitorId) == null) throw new BusinessException("Cannot add a region with unkown visitors.");
             }
 
             //Add the region
             region.Visitors = null;
-            RegionRepository.Add(region);
+            _regionRepository.Add(region);
 
             //Add all existing visitors to this reigon
-            foreach (var visitorId in dto.VisitorIds)
+            foreach (var visitorId in vistorIds)
             {
-                RegionRepository.AddVisitor(region.Id, visitorId);
+                _regionRepository.AddVisitor(region.Id, visitorId);
             }
 
             return region.Id;
@@ -54,46 +52,46 @@ namespace BusinessLayer
         public void Delete(int regionId)
         {
             //Load the region
-            Region region = RegionRepository.Get(regionId) ?? throw new KeyNotFoundException("Cannot find region with the id " + regionId);
+            if(_regionRepository.Get(regionId)==null) throw new KeyNotFoundException("Cannot find region with the id " + regionId);
 
             //Delete the visits
-            RegionRepository.RemoveAllVisitors(regionId);
+            _regionRepository.RemoveAllVisitors(regionId);
 
             //Delete the region
-            RegionRepository.Delete(regionId);
+            _regionRepository.Delete(regionId);
         }
 
         public void Update(RegionDto dto)
         {
             //Load and validate the region
             if (dto == null) throw new ArgumentNullException(nameof(dto));
-            Region region = RegionRepository.Get(dto.Id);
+            Region region = _regionRepository.Get(dto.Id);
             if (region == null) throw new KeyNotFoundException("Cannot find the region with the id " + dto.Id);
-            Mapper.Map(dto, region);
+            _mapper.Map(dto, region);
 
             //Check if only existing visitors are visiting the region
-            dto.VisitorIds = dto.VisitorIds ?? new List<int>();
-            foreach (var visitorId in dto.VisitorIds)
+            int[] visitorIds = dto.VisitorIds?.ToArray() ?? new int[0];
+            foreach (var visitorId in visitorIds)
             {
-                if (VisitorRepository.Get(visitorId) == null) throw new BusinessException("Cannot add a region with unkown visitors.");
+                if (_visitorRepository.Get(visitorId) == null) throw new BusinessException("Cannot add a region with unkown visitors.");
             }
 
             //Update the region
-            RegionRepository.Update(region);
+            _regionRepository.Update(region);
 
             //Update the relationships
-            int[] current = RegionRepository.GetAllVisitors(region.Id)?.ToArray() ?? new int[0];
+            int[] current = _regionRepository.GetAllVisitors(region.Id)?.ToArray() ?? new int[0];
 
             //Delete
-            foreach (var visitorId in current.Except(dto.VisitorIds).ToArray())
+            foreach (var visitorId in current.Except(visitorIds).ToArray())
             {
-                RegionRepository.RemoveVisitor(region.Id, visitorId);
+                _regionRepository.RemoveVisitor(region.Id, visitorId);
             }
 
             //Add
-            foreach (var visitorId in dto.VisitorIds.Except(current).ToArray())
+            foreach (var visitorId in visitorIds.Except(current).ToArray())
             {
-                RegionRepository.AddVisitor(region.Id, visitorId);
+                _regionRepository.AddVisitor(region.Id, visitorId);
             }
 
         }
@@ -103,22 +101,22 @@ namespace BusinessLayer
         /// </summary>
         public RegionDto Get(int regionId)
         {
-            Region region = RegionRepository.Get(regionId);
+            Region region = _regionRepository.Get(regionId);
             if (region == null) return null;
 
-            var visitorIds = RegionRepository.GetAllVisitors(regionId);
-            RegionDto dto = Mapper.Map<RegionDto>(region);
+            var visitorIds = _regionRepository.GetAllVisitors(regionId);
+            RegionDto dto = _mapper.Map<RegionDto>(region);
             dto.VisitorIds = visitorIds;
             return dto;
         }
 
         public IEnumerable<RegionDto> Get()
         {
-            IEnumerable<Region> regions = RegionRepository.GetAll();
-            List<RegionDto> dtos =  Mapper.Map<List<RegionDto>>(regions);
+            IEnumerable<Region> regions = _regionRepository.GetAll();
+            List<RegionDto> dtos =  _mapper.Map<List<RegionDto>>(regions);
             foreach (var dto in dtos)
             {
-                dto.VisitorIds = RegionRepository.GetAllVisitors(dto.Id);
+                dto.VisitorIds = _regionRepository.GetAllVisitors(dto.Id);
             }
 
             return dtos;

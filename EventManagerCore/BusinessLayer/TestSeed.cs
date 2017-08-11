@@ -2,15 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataTransfer;
 
 namespace BusinessLayer
 {
     public class TestSeed : IDataSeeder
     {
-        private readonly RegionDto[] Regions = new RegionDto[]
+        private readonly RegionDto[] _regions = new RegionDto[]
             {
                 new RegionDto()
                 {
@@ -38,7 +36,7 @@ namespace BusinessLayer
                 },
             };
 
-        private readonly VisitorDto[] Visitors = new VisitorDto[]
+        private readonly VisitorDto[] _visitors = new VisitorDto[]
         {
             new VisitorDto()
             {
@@ -59,13 +57,13 @@ namespace BusinessLayer
                 Bio = "I am a person."
             }
         };
-        private readonly IPasswordHasher<VisitorDto> Hasher;
+        private readonly IPasswordHasher<VisitorDto> _hasher;
 
         public TestSeed(RegionManager regionManager, VisitorManager visitorManager, IPasswordHasher<VisitorDto> hasher)
         {
             RegionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
             VisitorManager = visitorManager ?? throw new ArgumentNullException(nameof(visitorManager));
-            Hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
+            _hasher = hasher ?? throw new ArgumentNullException(nameof(hasher));
         }
         public RegionManager RegionManager { get; }
 
@@ -73,22 +71,22 @@ namespace BusinessLayer
 
         public void SeedData()
         {
-            foreach (var region in Regions)
+            foreach (var region in _regions)
             {
                 region.Id = RegionManager.Add(region);
             }
 
-            foreach (var visitor in Visitors)
+            foreach (var visitor in _visitors)
             {
-                visitor.PasswordHash = Hasher.HashPassword(visitor, "password123");
+                visitor.PasswordHash = _hasher.HashPassword(visitor, "password123");
                 visitor.Id = VisitorManager.Add(visitor);
             }
 
 
-            Regions[0].VisitorIds = Visitors.Select(x => x.Id);
-            Regions[1].VisitorIds = new List<int>() { Visitors.First().Id, Visitors.Last().Id };
+            _regions[0].VisitorIds = _visitors.Select(x => x.Id);
+            _regions[1].VisitorIds = new List<int>() { _visitors.First().Id, _visitors.Last().Id };
 
-            foreach (var region in Regions)
+            foreach (var region in _regions)
             {
                 RegionManager.Update(region);
             }

@@ -32,7 +32,7 @@ namespace DataLayer.Repository.DatabaseRepository
             Region region = Get(regionId);
             if (region == null) throw new KeyNotFoundException($"Cannot find a region with the id {regionId}.");
 
-            int affectedRows = 0;
+            int affectedRows;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 affectedRows = sql.Execute($"INSERT INTO {DatabaseContext.RegionVisitorsTableName} (RegionId,VisitorId) VALUES ({regionId},{visitorId});");
@@ -44,7 +44,7 @@ namespace DataLayer.Repository.DatabaseRepository
 
         public IEnumerable<Region> GetAllAfter(DateTime time)
         {
-            IEnumerable<Region> regions = null;
+            IEnumerable<Region> regions;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 regions = sql.Query<Region>($"Select * FROM {TableName} where TimeStamp > '{time}';");
@@ -69,16 +69,15 @@ namespace DataLayer.Repository.DatabaseRepository
 
         public void RemoveAllVisitors(int regionId)
         {
-            int affectedRows = 0;
             using (var sql = new SqlConnection(ConnectionString))
             {
-                affectedRows = sql.Execute($"DELETE FROM {DatabaseContext.RegionVisitorsTableName} Where RegionId={regionId};");
+                sql.Execute($"DELETE FROM {DatabaseContext.RegionVisitorsTableName} Where RegionId={regionId};");
             }
         }
 
         public void RemoveVisitor(int regionId, int visitorId)
         {
-            int affectedRows = 0;
+            int affectedRows;
             using (var sql = new SqlConnection(ConnectionString))
             {
                 affectedRows = sql.Execute($"DELETE FROM {DatabaseContext.RegionVisitorsTableName} Where RegionId={regionId} AND VisitorId={visitorId};");

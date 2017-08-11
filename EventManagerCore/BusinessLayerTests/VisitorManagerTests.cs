@@ -1,4 +1,3 @@
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BusinessLayer;
 using AutoMapper;
@@ -6,8 +5,6 @@ using BusinessLayer.Mapping;
 using DataLayer.Repository.DatabaseRepository;
 using DataLayer.Repository;
 using DataTransfer;
-using DataLayer.DataModel;
-using System.Collections.Generic;
 
 namespace BusinessLayerTests
 {
@@ -15,15 +12,15 @@ namespace BusinessLayerTests
     public class VisitorManagerTests
     {
         protected static string TestConnectionString = @"Data Source =(localdb)\MSSQLLocalDB; Initial Catalog = EventManagerBusinessTests; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = True; ApplicationIntent = ReadWrite; MultiSubnetFailover = False;Pooling=false";
-        private readonly IVistorRepository VisitorRepository = new VisitorDatabaseRepository(TestConnectionString);
-        private readonly IRegionRepository RegionRepository = new RegionDatabaseRepository(TestConnectionString);
-        private readonly VisitorManager VisitorManager;
+        private readonly IVistorRepository _visitorRepository = new VisitorDatabaseRepository(TestConnectionString);
+        private readonly IRegionRepository _regionRepository = new RegionDatabaseRepository(TestConnectionString);
+        private readonly VisitorManager _visitorManager;
 
         public VisitorManagerTests()
         {
             Mapper.Initialize(m => m.AddProfile<MappingProfiles>());
             Mapper.AssertConfigurationIsValid();
-            VisitorManager = new VisitorManager(VisitorRepository, Mapper.Instance, RegionRepository);
+            _visitorManager = new VisitorManager(_visitorRepository, Mapper.Instance, _regionRepository);
         }
 
         
@@ -31,11 +28,11 @@ namespace BusinessLayerTests
         [TestMethod]
         public void TestAddGetDelete()
         {
-            int id = VisitorManager.Add(DataGenerator.GetVisitor());
-            VisitorDto visitor = VisitorManager.Get(id);
+            int id = _visitorManager.Add(DataGenerator.GetVisitor());
+            VisitorDto visitor = _visitorManager.Get(id);
             Assert.IsNotNull(visitor);
-            VisitorManager.Delete(id);
-            Assert.IsNull(VisitorManager.Get(id));
+            _visitorManager.Delete(id);
+            Assert.IsNull(_visitorManager.Get(id));
         }
     }
 }
