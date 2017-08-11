@@ -8,11 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransfer;
+using EventApi.Services.Filters;
 
 namespace EventApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ValidateModelAttribute]
     public class VisitorsController : Controller
     {
         private readonly VisitorManager VisitorManager;

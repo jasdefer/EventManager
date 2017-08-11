@@ -9,12 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransfer;
+using EventApi.Services.Filters;
 
 namespace EventApi.Controllers
 {
     
     [Route("api/[controller]")]
     [Authorize]
+    [ValidateModelAttribute]
     public class RegionsController : Controller
     {
         private readonly RegionManager RegionManager;

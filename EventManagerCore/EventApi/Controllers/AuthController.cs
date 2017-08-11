@@ -13,9 +13,11 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using DataTransfer;
+using EventApi.Services.Filters;
 
 namespace EventApi.Controllers
 {
+    [ValidateModelAttribute]
     public class AuthController : Controller
     {
         private readonly ILogger<AuthController> Logger;
@@ -35,7 +37,7 @@ namespace EventApi.Controllers
         }
 
         [HttpPost("api/auth/token")]
-        public async Task<IActionResult> CreateToken([FromBody] CrendentialModel model)
+        public async Task<IActionResult> CreateToken([FromBody]CredentialModel model)
         {
             try
             {
