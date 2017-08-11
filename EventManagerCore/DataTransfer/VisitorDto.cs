@@ -10,6 +10,7 @@ namespace DataTransfer
     public class VisitorDto
     {
         public int Id { get; set; }
+
         [Required]
         [MinLength(3)]
         [MaxLength(64)]

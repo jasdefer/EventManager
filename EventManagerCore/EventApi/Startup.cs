@@ -12,11 +12,11 @@ using DataLayer.Repository.DatabaseRepository;
 using AutoMapper;
 using BusinessLayer;
 using DataLayer.DataModel;
-using EventApi.Model;
 using DataTransfer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using EventApi.Services.Identity;
 
 namespace EventApi
 {

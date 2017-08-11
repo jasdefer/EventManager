@@ -59,23 +59,6 @@ namespace EventApi.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
-        public IActionResult Add([FromBody]VisitorDto dto)
-        {
-            try
-            {
-                dto.Id = VisitorManager.Add(dto);
-                var uri = Url.Link("GetVisitor", new { id = dto.Id });
-                return Created(uri, dto);
-            }
-            catch (Exception e)
-            {
-                Logger.LogWarning(1, e, $"Cannot add visitor.");
-            }
-
-            return BadRequest();
-        }
-
         [HttpPut]
         public IActionResult Update([FromBody]VisitorDto dto)
         {
