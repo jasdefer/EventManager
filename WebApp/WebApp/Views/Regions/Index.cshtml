@@ -1,0 +1,14 @@
+﻿@model IEnumerable<DataTransfer.RegionDto>
+
+@{
+    ViewData["Title"] = "Regions";
+}
+<h1>@ViewData["Title"]</h1>
+@foreach (var region in Model)
+{
+    <div>
+        <h2>@region.Name</h2>
+        <p>@region.Description</p>
+        <hr />
+    </div>
+}

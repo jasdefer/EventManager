@@ -23,6 +23,8 @@
             <a asp-controller="Home" asp-action="Index">Home</a>
             @if (HttpContextAccessor.HttpContext.Request.Cookies[Config["Cookie:Token"]] != null)
             {
+                <a asp-controller="Regions" asp-action="Index">Regions</a>
+                <a asp-controller="Visitors" asp-action="Index">Visitors</a>
                 <a asp-controller="Home" asp-action="Logout">Logout</a>
             }
             else

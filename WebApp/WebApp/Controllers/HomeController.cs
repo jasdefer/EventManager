@@ -22,7 +22,6 @@ namespace WebApp.Controllers
         }
         public IActionResult Index()
         {
-            ViewData["Token"] = Request.Cookies[Config["Cookie:Token"]];
             return View();
         }
 

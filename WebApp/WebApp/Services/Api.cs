@@ -1,4 +1,5 @@
 ﻿using DataTransfer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using WebApp.Model;
@@ -22,6 +24,36 @@ namespace WebApp.Services
         {
             Config = config ?? throw new ArgumentNullException(nameof(config));
             Client = new HttpClient();
+        }
+
+        public async Task<IEnumerable<VisitorDto>> GetVisitors(IRequestCookieCollection cookies)
+        {
+            return await Get<IEnumerable<VisitorDto>>(GetUri(Config["Api:Visitors"]), cookies);
+        }
+
+        public async Task<IEnumerable<RegionDto>> GetRegions(IRequestCookieCollection cookies)
+        {
+            return await Get<IEnumerable<RegionDto>>(GetUri(Config["Api:Regions"]), cookies);
+        }
+
+        public async Task<TokenDto> Login(LoginViewModel model)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(model),Encoding.UTF8,"application/json");
+            var response = await Client.PostAsync(GetUri(Config["Api:Login"]), content);
+            return await ValidateResponse<TokenDto>(response);
+        }
+
+        public Uri GetUri(string action)
+        {
+            Uri uri = new Uri(Config["Api:Base"]);
+            return new Uri(uri,action);
+        }
+
+        private async Task<T> Get<T>(Uri uri, IRequestCookieCollection cookies) where T:class
+        {
+            Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", cookies[Config["Cookie:Token"]]);
+            var response = await Client.GetAsync(uri);
+            return await ValidateResponse<T>(response);
         }
 
         private async Task<T> ValidateResponse<T>(HttpResponseMessage response) where T : class
@@ -43,19 +75,6 @@ namespace WebApp.Services
 
             throw new UnexpectedServerResponse(response.StatusCode);
 
-        }
-
-        public async Task<TokenDto> Login(LoginViewModel model)
-        {
-            var content = new StringContent(JsonConvert.SerializeObject(model),Encoding.UTF8,"application/json");
-            var response = await Client.PostAsync(GetUri(Config["Api:Login"]), content);
-            return await ValidateResponse<TokenDto>(response);
-        }
-
-        public Uri GetUri(string action)
-        {
-            Uri uri = new Uri(Config["Api:Base"]);
-            return new Uri(uri,action);
         }
     }
 }
