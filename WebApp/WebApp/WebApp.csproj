@@ -24,5 +24,8 @@
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\EventManagerCore\DataTransfer\DataTransfer.csproj" />
+  </ItemGroup>
 
 </Project>

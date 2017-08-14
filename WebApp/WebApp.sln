@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{C8E627F8-4F92-4B84-9EFD-634F41309770}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTransfer", "..\EventManagerCore\DataTransfer\DataTransfer.csproj", "{FAE9F6A8-A51C-4A55-9A89-43A9CF97257F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{C8E627F8-4F92-4B84-9EFD-634F41309770}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8E627F8-4F92-4B84-9EFD-634F41309770}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8E627F8-4F92-4B84-9EFD-634F41309770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAE9F6A8-A51C-4A55-9A89-43A9CF97257F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAE9F6A8-A51C-4A55-9A89-43A9CF97257F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAE9F6A8-A51C-4A55-9A89-43A9CF97257F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAE9F6A8-A51C-4A55-9A89-43A9CF97257F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

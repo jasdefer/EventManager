@@ -2,3 +2,7 @@
     ViewData["Title"] = "Home Page";
 }
 <h1>Home</h1>
+@if (ViewData["Token"] != null)
+{
+    <p>You are authenticated!</p>
+}
