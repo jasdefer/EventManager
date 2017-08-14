@@ -2,16 +2,12 @@
 using BusinessLayer;
 using BusinessLayer.BusinessExceptions;
 using BusinessLayer.Mapping;
-using DataLayer.DataModel;
 using DataLayer.Repository;
 using DataLayer.Repository.DatabaseRepository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValidationRules.Dto;
+using DataTransfer;
 
 namespace BusinessLayerTests
 {
@@ -19,17 +15,17 @@ namespace BusinessLayerTests
     public class RelationShipTests
     {
         protected static string TestConnectionString = @"Data Source =(localdb)\MSSQLLocalDB; Initial Catalog = EventManagerBusinessTests; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = True; ApplicationIntent = ReadWrite; MultiSubnetFailover = False;Pooling=false";
-        private readonly IVistorRepository VisitorRepository = new VisitorDatabaseRepository(TestConnectionString);
-        private readonly IRegionRepository RegionRepository = new RegionDatabaseRepository(TestConnectionString);
-        private readonly RegionManager RegionManager;
-        private readonly VisitorManager VisitorManager;
+        private readonly IVistorRepository _visitorRepository = new VisitorDatabaseRepository(TestConnectionString);
+        private readonly IRegionRepository _regionRepository = new RegionDatabaseRepository(TestConnectionString);
+        private readonly RegionManager _regionManager;
+        private readonly VisitorManager _visitorManager;
 
         public RelationShipTests()
         {
             Mapper.Initialize(m => m.AddProfile<MappingProfiles>());
             Mapper.AssertConfigurationIsValid();
-            RegionManager = new RegionManager(VisitorRepository, Mapper.Instance, RegionRepository);
-            VisitorManager = new VisitorManager(VisitorRepository, Mapper.Instance, RegionRepository);
+            _regionManager = new RegionManager(_visitorRepository, Mapper.Instance, _regionRepository);
+            _visitorManager = new VisitorManager(_visitorRepository, Mapper.Instance, _regionRepository);
         }
 
         [TestMethod]
@@ -41,17 +37,17 @@ namespace BusinessLayerTests
 
             //Fail, when adding the visitor with an unknown region
             visitor.RegionIds = new List<int>() { 0 };
-            Assert.ThrowsException<BusinessException>(() => VisitorManager.Add(visitor));
+            Assert.ThrowsException<BusinessException>(() => _visitorManager.Add(visitor));
 
-            region.Id = RegionManager.Add(region);
+            region.Id = _regionManager.Add(region);
             visitor.RegionIds = new List<int>() { region.Id };
-            visitor.Id = VisitorManager.Add(visitor);
+            visitor.Id = _visitorManager.Add(visitor);
 
-            Assert.AreEqual(visitor.Id, RegionManager.Get(region.Id).VisitorIds.Single());
-            Assert.AreEqual(region.Id, VisitorManager.Get(visitor.Id).RegionIds.Single());
+            Assert.AreEqual(visitor.Id, _regionManager.Get(region.Id).VisitorIds.Single());
+            Assert.AreEqual(region.Id, _visitorManager.Get(visitor.Id).RegionIds.Single());
 
-            VisitorManager.Delete(visitor.Id);
-            RegionManager.Delete(region.Id);
+            _visitorManager.Delete(visitor.Id);
+            _regionManager.Delete(region.Id);
         }
 
         [TestMethod]
@@ -62,26 +58,26 @@ namespace BusinessLayerTests
             for (int i = 0; i < visitors.Length; i++)
             {
                 visitors[i] = DataGenerator.GetVisitor();
-                visitors[i].Id = VisitorManager.Add(visitors[i]);
+                visitors[i].Id = _visitorManager.Add(visitors[i]);
             }
             RegionDto[] regions = new RegionDto[visitors.Length];
             for (int i = 0; i < regions.Length; i++)
             {
                 regions[i] = DataGenerator.GetRegion();
-                regions[i].Id = RegionManager.Add(regions[i]);
+                regions[i].Id = _regionManager.Add(regions[i]);
             }
 
             //Add relation ships
             visitors[0].RegionIds = new List<int>() { regions[0].Id };
-            VisitorManager.Update(visitors[0]);
+            _visitorManager.Update(visitors[0]);
             regions[1].VisitorIds = new List<int>() { visitors[1].Id };
-            RegionManager.Update(regions[1]);
+            _regionManager.Update(regions[1]);
 
             //Update the data
             for (int i = 0; i < visitors.Length; i++)
             {
-                visitors[i] = VisitorManager.Get(visitors[i].Id);
-                regions[i] = RegionManager.Get(regions[i].Id);
+                visitors[i] = _visitorManager.Get(visitors[i].Id);
+                regions[i] = _regionManager.Get(regions[i].Id);
             }
 
             //Validate relationships
@@ -92,18 +88,18 @@ namespace BusinessLayerTests
 
             //Switch relationships
             regions[1].VisitorIds = new List<int>();
-            RegionManager.Update(regions[1]);
+            _regionManager.Update(regions[1]);
             visitors[0].RegionIds = new List<int>() { regions[1].Id };
-            VisitorManager.Update(visitors[0]);
+            _visitorManager.Update(visitors[0]);
             regions[0].VisitorIds = new List<int>() { visitors[1].Id };
-            RegionManager.Update(regions[0]);
+            _regionManager.Update(regions[0]);
             
 
             //Update the data
             for (int i = 0; i < visitors.Length; i++)
             {
-                visitors[i] = VisitorManager.Get(visitors[i].Id);
-                regions[i] = RegionManager.Get(regions[i].Id);
+                visitors[i] = _visitorManager.Get(visitors[i].Id);
+                regions[i] = _regionManager.Get(regions[i].Id);
             }
 
             Assert.AreEqual(regions[0].Id, visitors[1].RegionIds.Single());
@@ -115,8 +111,8 @@ namespace BusinessLayerTests
             //Cleanup
             for (int i = 0; i < visitors.Length; i++)
             {
-                VisitorManager.Delete(visitors[i].Id);
-                RegionManager.Delete(regions[i].Id);
+                _visitorManager.Delete(visitors[i].Id);
+                _regionManager.Delete(regions[i].Id);
             }
         }
     }

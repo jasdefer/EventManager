@@ -1,13 +1,7 @@
 ﻿using Dapper;
 using DataLayer.Properties;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Repository.DatabaseRepository
 {
@@ -22,6 +16,7 @@ namespace DataLayer.Repository.DatabaseRepository
         /// </summary>
         /// <param name="connectionString">The connection string to the database.</param>
         /// <param name="path">The path where the database will be created.</param>
+        /// <param name="recreate">If true, any existing database will be dropped before creating it.</param>
         public static void CreateDb(string connectionString, bool recreate = false, string path = null)
         {
             path = path ?? Path.GetTempPath();
@@ -31,7 +26,7 @@ namespace DataLayer.Repository.DatabaseRepository
             string dbName = builder.InitialCatalog;
 
             //Check if the database exist. Use the master connection of the database for this operation
-            bool exists = false;
+            bool exists;
             builder.InitialCatalog = "master";
             
 

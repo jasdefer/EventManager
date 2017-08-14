@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -11,18 +8,17 @@ using DataLayer.Repository;
 using DataLayer.Repository.DatabaseRepository;
 using AutoMapper;
 using BusinessLayer;
-using DataLayer.DataModel;
-using EventApi.Model;
-using ValidationRules.Dto;
+using DataTransfer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using EventApi.Services.Identity;
 
 namespace EventApi
 {
     public class Startup
     {
-        private IConfigurationRoot Configuration;
+        private readonly IConfigurationRoot _configuration;
 
         public Startup(IHostingEnvironment env)
         {
@@ -31,7 +27,7 @@ namespace EventApi
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            _configuration = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -41,7 +37,7 @@ namespace EventApi
             services.AddTransient<IVistorRepository, VisitorDatabaseRepository>();
             services.AddTransient<RegionManager>();
             services.AddTransient<VisitorManager>();
-            services.AddSingleton(Configuration);
+            services.AddSingleton(_configuration);
             services.AddAutoMapper();
             services.AddIdentity<VisitorDto,IdentityRole>()
                 .AddUserStore<UserStore>();
@@ -70,7 +66,7 @@ namespace EventApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IDataSeeder seeder)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(_configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseIdentity();
@@ -80,17 +76,17 @@ namespace EventApi
                 AutomaticChallenge = true,
                 TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidAudience = Configuration["Token:Audience"],
-                    ValidIssuer= Configuration["Token:Issuer"],
+                    ValidAudience = _configuration["Token:Audience"],
+                    ValidIssuer= _configuration["Token:Issuer"],
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Token:JwtKey"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:JwtKey"])),
                     ValidateLifetime = true
                 }
             });
 
             app.UseMvc();
 
-            DatabaseContext.CreateDb(Configuration["ConnectionString"], true);
+            DatabaseContext.CreateDb(_configuration["ConnectionString"], true);
             seeder.SeedData();
         }
     }

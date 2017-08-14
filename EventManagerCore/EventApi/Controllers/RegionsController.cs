@@ -1,30 +1,28 @@
 ﻿using BusinessLayer;
-using BusinessLayer.BusinessExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValidationRules.Dto;
+using DataTransfer;
+using EventApi.Services.Filters;
 
 namespace EventApi.Controllers
 {
     
     [Route("api/[controller]")]
     [Authorize]
+    [ValidateModelAttribute]
     public class RegionsController : Controller
     {
-        private readonly RegionManager RegionManager;
-        private readonly ILogger<RegionsController> Logger;
+        private readonly RegionManager _regionManager;
+        private readonly ILogger<RegionsController> _logger;
 
         public RegionsController(RegionManager regionManager,
             ILogger<RegionsController> logger)
         {
-            RegionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
-            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet("{id}", Name = "RegionGet")]
@@ -32,13 +30,13 @@ namespace EventApi.Controllers
         {
             try
             {
-                RegionDto dto = RegionManager.Get(id);
+                RegionDto dto = _regionManager.Get(id);
                 if (dto == null) return NotFound();
                 return Ok(dto);
             }
             catch (Exception e)
             {
-                Logger.LogWarning(1, e, $"Cannot get region {id}.");
+                _logger.LogWarning(1, e, $"Cannot get region {id}.");
             }
 
             return BadRequest();
@@ -49,12 +47,12 @@ namespace EventApi.Controllers
         {
             try
             {
-                IEnumerable<RegionDto> regions = RegionManager.Get();
+                IEnumerable<RegionDto> regions = _regionManager.Get();
                 return Ok(regions);
             }
             catch (Exception e)
             {
-                Logger.LogWarning(1, e, "Cannot get all regions.");
+                _logger.LogWarning(1, e, "Cannot get all regions.");
             }
 
             return BadRequest();
@@ -65,13 +63,13 @@ namespace EventApi.Controllers
         {
             try
             {
-                dto.Id = RegionManager.Add(dto);
+                dto.Id = _regionManager.Add(dto);
                 var uri = Url.Link("RegionGet", new { id = dto.Id });
                 return Created(uri,dto);
             }
             catch (Exception e)
             {
-                Logger.LogWarning(1, e, $"Cannot add region.");
+                _logger.LogWarning(1, e, "Cannot add region.");
             }
 
             return BadRequest();
@@ -82,13 +80,13 @@ namespace EventApi.Controllers
         {
             try
             {
-                RegionManager.Update(dto);
+                _regionManager.Update(dto);
                 return Ok();
             }
             catch (Exception e)
             {
                 if (e is KeyNotFoundException) return NotFound();
-                else Logger.LogWarning(1, e, $"Cannot update region");
+                else _logger.LogWarning(1, e, "Cannot update region");
             }
 
             return BadRequest();
@@ -99,7 +97,7 @@ namespace EventApi.Controllers
         {
             try
             {
-                RegionManager.Delete(id);
+                _regionManager.Delete(id);
                 return Ok();
             }
             catch (Exception e)
@@ -107,7 +105,7 @@ namespace EventApi.Controllers
                 if (e is KeyNotFoundException) return NotFound();
                 else
                 {
-                    Logger.LogWarning(1, e, $"Cannot delete region {id}");
+                    _logger.LogWarning(1, e, $"Cannot delete region {id}");
                 }
             }
 

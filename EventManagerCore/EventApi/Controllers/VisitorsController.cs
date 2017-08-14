@@ -4,25 +4,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ValidationRules.Dto;
+using DataTransfer;
+using EventApi.Services.Filters;
 
 namespace EventApi.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
+    [ValidateModelAttribute]
     public class VisitorsController : Controller
     {
-        private readonly VisitorManager VisitorManager;
-        private readonly ILogger<RegionsController> Logger;
+        private readonly VisitorManager _visitorManager;
+        private readonly ILogger<RegionsController> _logger;
 
         public VisitorsController(VisitorManager visitorManager,
             ILogger<RegionsController> logger)
         {
-            VisitorManager = visitorManager ?? throw new ArgumentNullException(nameof(visitorManager));
-            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _visitorManager = visitorManager ?? throw new ArgumentNullException(nameof(visitorManager));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet("{id}", Name = "GetVisitor")]
@@ -30,13 +29,13 @@ namespace EventApi.Controllers
         {
             try
             {
-                VisitorDto dto = VisitorManager.Get(id);
+                VisitorDto dto = _visitorManager.Get(id);
                 if (dto == null) return NotFound();
                 return Ok(dto);
             }
             catch (Exception e)
             {
-                Logger.LogWarning(1, e, $"Cannot get visitor {id}.");
+                _logger.LogWarning(1, e, $"Cannot get visitor {id}.");
             }
             return BadRequest();
         }
@@ -46,29 +45,12 @@ namespace EventApi.Controllers
         {
             try
             {
-                IEnumerable<VisitorDto> visitors = VisitorManager.Get();
+                IEnumerable<VisitorDto> visitors = _visitorManager.Get();
                 return Ok(visitors);
             }
             catch (Exception e)
             {
-                Logger.LogWarning(2, e, "Cannot get all visitors.");
-            }
-
-            return BadRequest();
-        }
-
-        [HttpPost]
-        public IActionResult Add([FromBody]VisitorDto dto)
-        {
-            try
-            {
-                dto.Id = VisitorManager.Add(dto);
-                var uri = Url.Link("GetVisitor", new { id = dto.Id });
-                return Created(uri, dto);
-            }
-            catch (Exception e)
-            {
-                Logger.LogWarning(1, e, $"Cannot add visitor.");
+                _logger.LogWarning(2, e, "Cannot get all visitors.");
             }
 
             return BadRequest();
@@ -79,13 +61,13 @@ namespace EventApi.Controllers
         {
             try
             {
-                VisitorManager.Update(dto);
+                _visitorManager.Update(dto);
                 return Ok();
             }
             catch (Exception e)
             {
                 if (e is KeyNotFoundException) return NotFound();
-                Logger.LogWarning(1, e, $"Cannot update visitor.");
+                _logger.LogWarning(1, e, "Cannot update visitor.");
             }
 
             return BadRequest();
@@ -96,13 +78,13 @@ namespace EventApi.Controllers
         {
             try
             {
-                VisitorManager.Delete(id);
+                _visitorManager.Delete(id);
                 return Ok();
             }
             catch (Exception e)
             {
                 if (e is KeyNotFoundException) return NotFound();
-                Logger.LogWarning(2, e, $"Cannot delete visitor {id}.");
+                _logger.LogWarning(2, e, $"Cannot delete visitor {id}.");
             }
 
             return BadRequest();

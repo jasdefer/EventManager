@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLayer.Repository.MemoryRepository
 {
-    public abstract class MemoryRepository<T, U> : IRepository<T, U> where T : IEntity<U> where U : IComparable
+    public abstract class MemoryRepository<T, TU> : IRepository<T, TU> where T : IEntity<TU> where TU : IComparable
     {
-        protected static U Id = default(U);
+        protected static TU Id = default(TU);
         protected static List<T> Entities = new List<T>();
 
         public T Add(T entity)
@@ -20,16 +18,16 @@ namespace DataLayer.Repository.MemoryRepository
             return entity;
         }
 
-        protected abstract U GetNextId();
+        protected abstract TU GetNextId();
 
-        public void Delete(U id)
+        public void Delete(TU id)
         {
             T entity = Get(id);
             if (entity == null) throw new KeyNotFoundException($"No entity with the id {id} found.");
             Entities.Remove(entity);
         }
 
-        public T Get(U id)
+        public T Get(TU id)
         {
             if (id == null) throw new ArgumentNullException(nameof(id));
 
@@ -48,7 +46,7 @@ namespace DataLayer.Repository.MemoryRepository
 
             T oldEntity = Get(entity.Id);
             if (oldEntity == null) throw new KeyNotFoundException($"No entity with the id {entity.Id} found.");
-            oldEntity = entity;
+            Entities[Entities.IndexOf(oldEntity)] = entity;
         }
     }
 }

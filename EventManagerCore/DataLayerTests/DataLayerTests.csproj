@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
-    <ProjectReference Include="..\ValidationRules\ValidationRules.csproj" />
   </ItemGroup>
 
   <ItemGroup>
