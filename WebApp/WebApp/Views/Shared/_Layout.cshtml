@@ -1,4 +1,8 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿@inject Microsoft.Extensions.Configuration.IConfigurationRoot Config
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{ 
+
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +21,15 @@
     <div>
         <nav>
             <a asp-controller="Home" asp-action="Index">Home</a>
-            <a asp-controller="Home" asp-action="Login">Login</a>
+            @if (HttpContextAccessor.HttpContext.Request.Cookies[Config["Cookie:Token"]] != null)
+            {
+                <a asp-controller="Home" asp-action="Logout">Logout</a>
+            }
+            else
+            {
+                <a asp-controller="Home" asp-action="Login">Login</a>
+            }
+            
         </nav>
         @RenderBody()
         <footer>

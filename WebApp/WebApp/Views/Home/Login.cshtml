@@ -6,6 +6,7 @@
 <form method="post" asp-controller="Home" asp-action="Login">
     <fieldset>
         <legend>Login</legend>
+        @Html.ValidationSummary()
         <div>
             @Html.LabelFor(x => x.Email)
             @Html.EditorFor(x => x.Email)

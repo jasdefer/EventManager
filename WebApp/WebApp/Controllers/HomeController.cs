@@ -41,10 +41,22 @@ namespace WebApp.Controllers
             if (model != null && ModelState.IsValid)
             {
                 var token = await Api.Login(model);
-                CookieOptions options = new CookieOptions() { HttpOnly = true, Expires = token.Expiration };
-                Response.Cookies.Append(Config["Cookie:Token"], token.Value, options);
+                if (token == null) ModelState.AddModelError(string.Empty, "Could not authenticate.");
+                else
+                {
+                    CookieOptions options = new CookieOptions() { HttpOnly = true, Expires = token.Expiration };
+                    Response.Cookies.Append(Config["Cookie:Token"], token.Value, options);
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete(Config["Cookie:Token"]);
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Error()
