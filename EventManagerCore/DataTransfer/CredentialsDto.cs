@@ -2,7 +2,7 @@
 
 namespace DataTransfer
 {
-    public class CredentialModel
+    public class CredentialsDto
     {
         [Required]
         [EmailAddress]

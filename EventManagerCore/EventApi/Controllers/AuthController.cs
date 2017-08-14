@@ -33,7 +33,7 @@ namespace EventApi.Controllers
         }
 
         [HttpPost("api/auth/token")]
-        public async Task<IActionResult> CreateToken([FromBody]CredentialModel model)
+        public async Task<IActionResult> CreateToken([FromBody]CredentialsDto model)
         {
             try
             {
@@ -59,10 +59,10 @@ namespace EventApi.Controllers
                             signingCredentials: creds
                             );
 
-                        return Ok(new
+                        return Ok(new TokenDto
                         {
-                            token = new JwtSecurityTokenHandler().WriteToken(token) ,
-                            expiration  = token.ValidTo
+                            Value = new JwtSecurityTokenHandler().WriteToken(token) ,
+                            Expiration = token.ValidTo
                         });
                     }
                 }
