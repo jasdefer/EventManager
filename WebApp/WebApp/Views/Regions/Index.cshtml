@@ -10,6 +10,7 @@
     <div>
         <h2>@region.Name</h2>
         <p>@region.Description</p>
+        <p>@region.VisitorIds.Count() visitors.</p>
         <p><a asp-controller="Regions" asp-action="Display" asp-route-id="@region.Id">Display</a> <a asp-controller="Regions" asp-action="Update" asp-route-id="@region.Id">Update</a> <a asp-controller="Regions" asp-action="Delete" asp-route-id="@region.Id">Delete</a></p>
         <hr />
     </div>

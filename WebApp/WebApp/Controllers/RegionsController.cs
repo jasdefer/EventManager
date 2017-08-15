@@ -16,11 +16,13 @@ namespace WebApp.Controllers
     {
         private readonly IRegionRepository RegionRepository;
         private readonly IMapper _mapper;
+        private readonly IVisitorRepository _visitorRepository;
 
-        public RegionsController(IRegionRepository regionRepository, IMapper mapper)
+        public RegionsController(IRegionRepository regionRepository, IMapper mapper, IVisitorRepository visitorRepository)
         {
             RegionRepository = regionRepository ?? throw new ArgumentNullException(nameof(regionRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _visitorRepository = visitorRepository ?? throw new ArgumentNullException(nameof(visitorRepository));
         }
 
         [HttpGet]
@@ -33,8 +35,18 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Display(int id)
         {
-            var region = await RegionRepository.GetAsync(id);
-            return View(region);
+            RegionDto region = await RegionRepository.GetAsync(id);
+            DisplayRegionModel model = _mapper.Map<DisplayRegionModel>(region);
+            if (region.VisitorIds != null)
+            {
+                List<VisitorDto> visitors = new List<VisitorDto>();
+                foreach (var visitorId in region.VisitorIds)
+                {
+                    visitors.Add(await _visitorRepository.GetAsync(visitorId));
+                }
+                model.Visitors = visitors;
+            }
+            return View(model);
         }
 
         [HttpGet]
@@ -42,6 +54,13 @@ namespace WebApp.Controllers
         {
             await RegionRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveVisitor(int regionId, int visitorId)
+        {
+            await RegionRepository.RemoveVisitorAsync(regionId, visitorId);
+            return RedirectToAction(nameof(Display), new { id = regionId });
         }
 
         [HttpGet]

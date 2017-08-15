@@ -9,6 +9,7 @@
     <div>
         <h2>@visitor.Username</h2>
         <p>@visitor.Bio</p>
+        <p>@visitor.RegionIds.Count() linked regions.</p>
         <p>
             <a asp-controller="Visitors" asp-action="Display" asp-route-id="@visitor.Id">Display</a>
             <a asp-controller="Visitors" asp-action="Update" asp-route-id="@visitor.Id">Update</a>

@@ -13,7 +13,7 @@ namespace WebAppDataLayer.Repository.ApiRepository
 {
     public abstract class ApiRepository<T, TU> : IRepository<T, TU> where TU : IComparable where T:class
     {
-        private readonly HttpClient Client;
+        protected readonly HttpClient Client;
 
         public ApiRepository(TokenAccessor tokenAccessor, IUriBuilder<T> uriBuilder)
         {
@@ -64,7 +64,7 @@ namespace WebAppDataLayer.Repository.ApiRepository
             }
         }
 
-        private async Task<U> ValidateResponse<U>(HttpResponseMessage response) where U:class
+        protected async Task<U> ValidateResponse<U>(HttpResponseMessage response) where U:class
         {
             if (response == null) throw new ArgumentNullException(nameof(response));
 

@@ -10,7 +10,7 @@ using EventApi.Services.Filters;
 namespace EventApi.Controllers
 {
     
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [Authorize]
     [ValidateModelAttribute]
     public class RegionsController : Controller
@@ -107,6 +107,23 @@ namespace EventApi.Controllers
                 {
                     _logger.LogWarning(1, e, $"Cannot delete region {id}");
                 }
+            }
+
+            return BadRequest();
+        }
+
+        [HttpDelete("[action]/{regionId}/{visitorId}")]
+        public IActionResult RemoveVisitor(int regionId, int visitorId)
+        {
+            try
+            {
+                _regionManager.RemoveVisitor(regionId, visitorId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                if (e is KeyNotFoundException) return NotFound();
+                else _logger.LogWarning(1, e, "Cannot find region or visitor.");
             }
 
             return BadRequest();

@@ -110,6 +110,22 @@ namespace BusinessLayer
             return dto;
         }
 
+        /// <summary>
+        /// Remove a visitor from a region.
+        /// </summary>
+        public void RemoveVisitor(int regionId, int visitorId)
+        {
+            //Try to find the referenced entites
+            RegionDto region = Get(regionId);
+            if (region == null) throw new KeyNotFoundException("Cannot find the region with the id " + regionId);
+
+            Visitor visitor = _visitorRepository.Get(visitorId);
+            if(visitor == null) throw new KeyNotFoundException("Cannot find the visitor with the id " + visitorId);
+
+            //Remove their relationship
+            _regionRepository.RemoveVisitor(regionId, visitorId);
+        }
+
         public IEnumerable<RegionDto> Get()
         {
             IEnumerable<Region> regions = _regionRepository.GetAll();

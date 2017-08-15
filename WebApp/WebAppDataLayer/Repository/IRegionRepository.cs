@@ -9,6 +9,6 @@ namespace WebAppDataLayer.Repository
 {
     public interface IRegionRepository : IRepository<RegionDto,int>
     {
-        
+        Task RemoveVisitorAsync(int regionId, int visitorId);
     }
 }

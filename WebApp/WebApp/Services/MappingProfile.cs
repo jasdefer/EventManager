@@ -16,6 +16,7 @@ namespace WebApp.Services
         {
             CreateMap<RegionDto, AddRegionModel>().ReverseMap();
             CreateMap<VisitorDto, UpdateVisitorModel>().ReverseMap();
+            CreateMap<DisplayRegionModel, RegionDto>().ReverseMap();
         }
     }
 }
