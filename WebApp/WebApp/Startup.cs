@@ -7,7 +7,12 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApp.Services;
+using WebAppDataLayer.Repository;
+using DataTransfer;
+using WebAppDataLayer.Repository.ApiRepository;
+using WebApp.Services.Middleware;
+using WebApp.Services.UriBuilder;
+using AutoMapper;
 
 namespace WebApp
 {
@@ -28,8 +33,14 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
             services.AddSingleton(Configuration);
-            services.AddTransient<Api>();
+            services.AddScoped<TokenAccessor,TokenAccessor>();
+            services.AddScoped<IUriBuilder<RegionDto>, RegionUri>();
+            services.AddScoped<IUriBuilder<VisitorDto>, VisitorUri>();
+            services.AddScoped<IRegionRepository,ApiRegionRepository>();
+            services.AddScoped<IVisitorRepository, ApiVisitorRepository>();
+
             // Add framework services.
             services.AddMvc();
         }
@@ -52,12 +63,16 @@ namespace WebApp
 
             app.UseStaticFiles();
 
+            app.UseMiddleware<ReadToken>();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            
         }
     }
 }

@@ -1,0 +1,12 @@
+﻿@model DataTransfer.VisitorDto
+
+@{
+    ViewData["Title"] = Model.Username;
+}
+<h1>@ViewData["Title"]</h1>
+<p>@Model.Bio</p>
+<p>@Model.Email</p>
+<p>
+    <a asp-controller="Visitors" asp-action="Update" asp-route-id="@Model.Id">Update</a>
+    <a asp-controller="Visitors" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+</p>

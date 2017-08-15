@@ -1,0 +1,8 @@
+﻿@model DataTransfer.RegionDto
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+<h1>@ViewData["Title"]</h1>
+<p>@Model.Description</p>
+<p><a asp-controller="Regions" asp-action="Update" asp-route-id="@Model.Id">Update</a><a asp-controller="Regions" asp-action="Delete" asp-route-id="@Model.Id">Delete</a></p>

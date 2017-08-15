@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebApp.Services.WebAppExceptions
+namespace WebAppDataLayer.Repository.ApiRepository.ApiRepositoryExceptions
 {
-    public class ServerErrorException : WebAppException
+    public class ForbiddenException : ApiRepositoryException
     {
         
     }

@@ -1,0 +1,28 @@
+﻿@model WebApp.Model.Visitors.UpdateVisitorModel
+@{
+    ViewData["Title"] = "Update "+Model.Username;
+}
+<h1>@ViewData["Title"]</h1>
+<form method="post" asp-controller="Visitors" asp-action="Update">
+    <fieldset>
+        <legend>Update region</legend>
+        @Html.ValidationSummary()
+        @Html.HiddenFor(x => x.Id)
+        <div>
+            @Html.LabelFor(x => x.Username)
+            @Html.EditorFor(x => x.Username)
+            @Html.ValidationMessageFor(x => x.Username)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Email)
+            @Html.EditorFor(x => x.Email)
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Bio)
+            @Html.EditorFor(x => x.Bio)
+            @Html.ValidationMessageFor(x => x.Bio)
+        </div>
+        <input type="submit" value="Update" />
+    </fieldset>
+</form>

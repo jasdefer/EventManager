@@ -4,21 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Model;
-using WebApp.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Text;
+using System.Net;
+using DataTransfer;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Api Api;
         private readonly IConfigurationRoot Config;
 
-        public HomeController(Api api, IConfigurationRoot config)
+        public HomeController(IConfigurationRoot config)
         {
             Config = config ?? throw new ArgumentNullException(nameof(config));
-            Api = api ?? throw new ArgumentNullException(nameof(config));
         }
         public IActionResult Index()
         {
@@ -39,10 +41,14 @@ namespace WebApp.Controllers
         {
             if (model != null && ModelState.IsValid)
             {
-                var token = await Api.Login(model);
-                if (token == null) ModelState.AddModelError(string.Empty, "Could not authenticate.");
+                var client = new HttpClient();
+                StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                var result = await client.PostAsync(new Uri(Config["Api:Base"] + Config["Api:Login"]), content);
+                
+                if (!result.IsSuccessStatusCode) ModelState.AddModelError(string.Empty, "Could not authenticate.");
                 else
                 {
+                    var token = JsonConvert.DeserializeObject<TokenDto>(await result.Content.ReadAsStringAsync());
                     CookieOptions options = new CookieOptions() { HttpOnly = true, Expires = token.Expiration };
                     Response.Cookies.Append(Config["Cookie:Token"], token.Value, options);
                     return RedirectToAction(nameof(Index));

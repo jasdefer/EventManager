@@ -1,0 +1,37 @@
+﻿@model WebApp.Model.Regions.AddRegionModel
+@{
+    ViewData["Title"] = "Add region";
+}
+<h1>@ViewData["Title"]</h1>
+<form method="post" asp-controller="Regions" asp-action="Add">
+    <fieldset>
+        <legend>Add region</legend>
+        @Html.ValidationSummary()
+        <div>
+            @Html.LabelFor(x => x.Name)
+            @Html.EditorFor(x => x.Name)
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Description)
+            @Html.EditorFor(x => x.Description)
+            @Html.ValidationMessageFor(x => x.Description)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Polygon)
+            @Html.EditorFor(x => x.Polygon)
+            @Html.ValidationMessageFor(x => x.Polygon)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.Value)
+            @Html.EditorFor(x => x.Value)
+            @Html.ValidationMessageFor(x => x.Value)
+        </div>
+        <div>
+            @Html.LabelFor(x => x.TimeStamp)
+            @Html.EditorFor(x => x.TimeStamp)
+            @Html.ValidationMessageFor(x => x.TimeStamp)
+        </div>
+        <input type="submit" value="Add" />
+    </fieldset>
+</form>
